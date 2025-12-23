@@ -16,11 +16,8 @@ import sys
 import json
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from pydantic import BaseModel
-
-# Agent will be initialized lazily after environment is loaded
-agent = None
 
 def setup_environment():
     """Setup required environment variables"""
@@ -76,6 +73,11 @@ def setup_environment():
             print("⚠️  python-dotenv not installed, skipping .env file")
 # pylint: disable  Mi80OmFIVnBZMlhsa0xUb3Y2bzZRamd4U3c9PToyY2RhNDJiNw==
 
+# Load environment and configure paths before importing the agent,
+# so that SILICONFLOW_API_KEY and other settings are available.
+setup_environment()
+from rag.chat.agent_rag_anything import agent
+
 app = FastAPI(title="AuroraAI Agent Service")
 
 class ChatRequest(BaseModel):
@@ -84,23 +86,6 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     result: dict
 
-
-@app.on_event("startup")
-def init_agent():
-    """Initialize environment and LangGraph agent on startup.
-
-    This ensures .env is loaded so SILICONFLOW_API_KEY and other
-    settings are available before constructing the agent.
-    """
-    global agent
-
-    # Load environment (.env + other settings)
-    setup_environment()
-
-    # Import and bind the pre-built agent
-    from rag.chat.agent_rag_anything import agent as _agent
-    agent = _agent
-
 @app.get("/ok")
 def health_check():
     return {"status": "ok"}
@@ -108,9 +93,6 @@ def health_check():
 @app.post("/chat", response_model=ChatResponse)
 def chat(req: ChatRequest):
     """Simple chat endpoint using the RAG Anything agent."""
-    if agent is None:
-        raise HTTPException(status_code=503, detail="Agent not initialized")
-
     result = agent.invoke({"messages": [("user", req.query)]})
     return {"result": result}
 
