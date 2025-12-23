@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+.env
+.env.*
+*.log
+
+# Node / JS
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.pnpm-store/
+.next/
+dist/
+build/
+.cache/
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp

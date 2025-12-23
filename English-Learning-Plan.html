@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>90天英语突破计划 - Fiverr客户沟通专项</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #e8e8e8;
+            line-height: 1.8;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+        
+        .header .goal-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Progress Overview */
+        .progress-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .progress-card {
+            background: linear-gradient(145deg, #1e3a5f, #1a2d4a);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .progress-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .progress-card .icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        
+        .progress-card h3 {
+            color: #64b5f6;
+            margin-bottom: 10px;
+        }
+        
+        .progress-card .number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #4ade80;
+        }
+        
+        /* Section Styles */
+        .section {
+            background: linear-gradient(145deg, #1e3a5f, #162d50);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.6em;
+            color: #60a5fa;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(96, 165, 250, 0.3);
+        }
+        
+        .section-title .emoji {
+            font-size: 1.2em;
+        }
+        
+        /* Daily Schedule */
+        .daily-schedule {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .time-block {
+            background: linear-gradient(145deg, #243b55, #1d3048);
+            border-radius: 16px;
+            padding: 25px;
+            border-left: 4px solid;
+            transition: all 0.3s;
+        }
+        
+        .time-block:hover {
+            transform: scale(1.02);
+        }
+        
+        .time-block.listening { border-color: #f472b6; }
+        .time-block.speaking { border-color: #4ade80; }
+        .time-block.learning { border-color: #fbbf24; }
+        .time-block.review { border-color: #60a5fa; }
+        
+        .time-block .time {
+            font-size: 0.9em;
+            color: #94a3b8;
+            margin-bottom: 8px;
+        }
+        
+        .time-block h4 {
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .time-block .duration {
+            background: rgba(255,255,255,0.1);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: normal;
+        }
+        
+        /* Week Plan */
+        .week-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .week-tab {
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #94a3b8;
+        }
+        
+        .week-tab:hover, .week-tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .day-plan {
+            background: linear-gradient(145deg, #1a2d4a, #162540);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .day-header {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .day-header h4 {
+            font-size: 1.1em;
+        }
+        
+        .day-header .date-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+        }
+        
+        .day-content {
+            padding: 25px;
+        }
+        
+        .task-list {
+            list-style: none;
+        }
+        
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .task-item:last-child {
+            border-bottom: none;
+        }
+        
+        .task-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #4ade80;
+            border-radius: 6px;
+            flex-shrink: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .task-checkbox:hover {
+            background: rgba(74, 222, 128, 0.2);
+        }
+        
+        .task-checkbox.checked {
+            background: #4ade80;
+        }
+        
+        .task-checkbox.checked::after {
+            content: '✓';
+            color: #1a1a2e;
+            font-weight: bold;
+        }
+        
+        .task-content h5 {
+            color: #e2e8f0;
+            margin-bottom: 5px;
+            font-size: 1em;
+        }
+        
+        .task-content p {
+            color: #94a3b8;
+            font-size: 0.9em;
+        }
+        
+        .task-tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            margin-right: 8px;
+            margin-top: 8px;
+        }
+        
+        .tag-listening { background: rgba(244, 114, 182, 0.2); color: #f472b6; }
+        .tag-speaking { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
+        .tag-learning { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+        .tag-review { background: rgba(96, 165, 250, 0.2); color: #60a5fa; }
+        
+        /* Sentence Cards */
+        .sentence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .sentence-card {
+            background: linear-gradient(145deg, #243b55, #1d3048);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .sentence-card .category {
+            color: #60a5fa;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+        
+        .sentence-card .english {
+            font-size: 1.15em;
+            color: #f8fafc;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .sentence-card .chinese {
+            color: #94a3b8;
+            font-size: 0.95em;
+        }
+        
+        .sentence-card .usage {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85em;
+            color: #64748b;
+        }
+        
+        .sentence-card .usage strong {
+            color: #fbbf24;
+        }
+        
+        /* GPT Prompts */
+        .prompt-card {
+            background: linear-gradient(145deg, #1e3a5f, #162d50);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+        }
+        
+        .prompt-card .scenario {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #4ade80;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .prompt-card .prompt-text {
+            background: #0f172a;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9em;
+            line-height: 1.8;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+        }
+        
+        .prompt-card .tips {
+            font-size: 0.9em;
+            color: #94a3b8;
+        }
+        
+        .prompt-card .tips li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .prompt-card .tips li::before {
+            content: '💡';
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Steps */
+        .steps {
+            counter-reset: step;
+        }
+        
+        .step {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .step-content h4 {
+            color: #f8fafc;
+            margin-bottom: 8px;
+        }
+        
+        .step-content p {
+            color: #94a3b8;
+        }
+        
+        /* Materials */
+        .material-card {
+            display: flex;
+            gap: 20px;
+            background: linear-gradient(145deg, #243b55, #1d3048);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        
+        .material-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            flex-shrink: 0;
+        }
+        
+        .material-info h4 {
+            color: #f8fafc;
+            margin-bottom: 5px;
+        }
+        
+        .material-info p {
+            color: #94a3b8;
+            font-size: 0.9em;
+        }
+        
+        .material-badge {
+            margin-left: auto;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+        
+        .badge-primary { background: rgba(102, 126, 234, 0.2); color: #667eea; }
+        .badge-secondary { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+        .badge-optional { background: rgba(148, 163, 184, 0.2); color: #94a3b8; }
+        
+        /* Tips Box */
+        .tips-box {
+            background: linear-gradient(145deg, #1e3a5f, #162d50);
+            border-radius: 16px;
+            padding: 25px;
+            border-left: 4px solid #fbbf24;
+            margin: 20px 0;
+        }
+        
+        .tips-box h4 {
+            color: #fbbf24;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tips-box ul {
+            list-style: none;
+        }
+        
+        .tips-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #cbd5e1;
+        }
+        
+        .tips-box li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4ade80;
+            font-weight: bold;
+        }
+        
+        /* Accordion */
+        .accordion {
+            margin-bottom: 15px;
+        }
+        
+        .accordion-header {
+            background: linear-gradient(145deg, #243b55, #1d3048);
+            padding: 20px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .accordion-header:hover {
+            background: linear-gradient(145deg, #2d4a6a, #243b55);
+        }
+        
+        .accordion-header h4 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .accordion-arrow {
+            transition: transform 0.3s;
+        }
+        
+        .accordion.open .accordion-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            display: none;
+            padding: 25px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 0 0 12px 12px;
+            margin-top: -10px;
+        }
+        
+        .accordion.open .accordion-content {
+            display: block;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+            font-size: 0.9em;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .daily-schedule {
+                grid-template-columns: 1fr;
+            }
+            
+            .sentence-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .section {
+                break-inside: avoid;
+                border: 1px solid #ddd;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🚀 90天英语突破计划</h1>
+            <p class="subtitle">专为 Fiverr 自由职业者设计 | 从开不了口到流利沟通</p>
+            <div class="goal-badge">🎯 目标：能够进行客户语音沟通和工作会议</div>
+        </header>
+        
+        <!-- Progress Overview -->
+        <div class="progress-overview">
+            <div class="progress-card">
+                <div class="icon">📅</div>
+                <h3>总时长</h3>
+                <div class="number">90 天</div>
+                <p>分为3个阶段，循序渐进</p>
+            </div>
+            <div class="progress-card">
+                <div class="icon">⏰</div>
+                <h3>每日投入</h3>
+                <div class="number">2 小时</div>
+                <p>4个模块，每个30分钟</p>
+            </div>
+            <div class="progress-card">
+                <div class="icon">🎧</div>
+                <h3>听力目标</h3>
+                <div class="number">10% → 70%</div>
+                <p>从几乎听不懂到基本理解</p>
+            </div>
+            <div class="progress-card">
+                <div class="icon">🗣️</div>
+                <h3>口语目标</h3>
+                <div class="number">流利对话</div>
+                <p>能完成完整的客户沟通</p>
+            </div>
+        </div>
+</div>
+</body>
+</html>
+
+        <!-- Daily Schedule Section -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="emoji">⏰</span>
+                每日时间安排（2小时）
+            </h2>
+            
+            <div class="daily-schedule">
+                <div class="time-block listening">
+                    <div class="time">第一个 30 分钟</div>
+                    <h4>
+                        🎧 听力输入
+                        <span class="duration">30min</span>
+                    </h4>
+                    <p>精听华尔街英语材料，三遍法：盲听→对照→跟读</p>
+                    <p style="margin-top: 10px; font-size: 0.85em; color: #f472b6;">
+                        <strong>核心目标：</strong>训练耳朵识别英语语音
+                    </p>
+                </div>
+                
+                <div class="time-block speaking">
+                    <div class="time">第二个 30 分钟</div>
+                    <h4>
+                        🗣️ 口语输出
+                        <span class="duration">30min</span>
+                    </h4>
+                    <p>用 ChatGPT 语音模式进行场景对话练习</p>
+                    <p style="margin-top: 10px; font-size: 0.85em; color: #4ade80;">
+                        <strong>核心目标：</strong>张开嘴，敢说话
+                    </p>
+                </div>
+                
+                <div class="time-block learning">
+                    <div class="time">第三个 30 分钟</div>
+                    <h4>
+                        📚 场景学习
+                        <span class="duration">30min</span>
+                    </h4>
+                    <p>学习职场沟通课程，积累实用句型</p>
+                    <p style="margin-top: 10px; font-size: 0.85em; color: #fbbf24;">
+                        <strong>核心目标：</strong>掌握工作场景表达
+                    </p>
+                </div>
+                
+                <div class="time-block review">
+                    <div class="time">第四个 30 分钟</div>
+                    <h4>
+                        🔁 复习巩固
+                        <span class="duration">30min</span>
+                    </h4>
+                    <p>复述当天内容，听自己录音，写英文小结</p>
+                    <p style="margin-top: 10px; font-size: 0.85em; color: #60a5fa;">
+                        <strong>核心目标：</strong>强化记忆，发现问题
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 1: Week 1 Detailed Plan -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="emoji">📋</span>
+                第一阶段：基础重建（第1-30天）
+            </h2>
+            
+            <div class="tips-box">
+                <h4>💡 阶段目标</h4>
+                <ul>
+                    <li>听力从 10% 提升到 40%，能听懂简单对话的主要内容</li>
+                    <li>口语能说出完整句子，不再磕磕巴巴</li>
+                    <li>掌握 50 个 Fiverr 客户沟通高频句型</li>
+                    <li>完成至少 20 次 GPT 语音对话练习</li>
+                </ul>
+            </div>
+
+            <h3 style="color: #60a5fa; margin: 30px 0 20px; font-size: 1.3em;">📅 第一周详细计划</h3>
+            
+            <!-- Day 1 -->
+            <div class="day-plan">
+                <div class="day-header">
+                    <h4>📌 Day 1 - 启动日</h4>
+                    <span class="date-badge">建立学习习惯</span>
+                </div>
+                <div class="day-content">
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🎧 听力训练：华尔街英语 Unit 1</h5>
+                                <p>找到华尔街英语的第一个视频/音频单元，按三遍法练习</p>
+                                <span class="task-tag tag-listening">听力 30min</span>
+                                <div style="margin-top: 12px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                    <strong style="color: #f472b6;">具体步骤：</strong><br>
+                                    1️⃣ 第一遍（5分钟）：不看任何文字，只听音频，尽量抓关键词<br>
+                                    2️⃣ 第二遍（10分钟）：打开字幕/文稿，边看边听，标记听不出的词<br>
+                                    3️⃣ 第三遍（15分钟）：跟读模仿，播一句暂停一句，录下自己的声音
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🗣️ 口语练习：自我介绍</h5>
+                                <p>打开 ChatGPT App，用语音模式练习自我介绍</p>
+                                <span class="task-tag tag-speaking">口语 30min</span>
+                                <div style="margin-top: 12px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                    <strong style="color: #4ade80;">GPT 指令（直接复制）：</strong><br>
+                                    <code style="display: block; margin-top: 10px; padding: 12px; background: #0f172a; border-radius: 6px; font-size: 0.9em;">
+                                    Let's practice English conversation. I'm a freelance web developer learning to communicate with clients. Please ask me to introduce myself, then give me feedback on my grammar and pronunciation. Speak slowly and use simple words. After I answer, ask follow-up questions about my work.
+                                    </code>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>📚 场景学习：开场问候句型</h5>
+                                <p>学习并背诵以下 5 个句子，大声朗读 10 遍</p>
+                                <span class="task-tag tag-learning">学习 30min</span>
+                                <div style="margin-top: 12px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                    <strong style="color: #fbbf24;">今日必背句型：</strong><br><br>
+                                    1. <strong>Hi, thanks for reaching out!</strong><br>
+                                    <span style="color: #94a3b8;">嗨，感谢你联系我！</span><br><br>
+                                    2. <strong>Thanks for the details – that really helps.</strong><br>
+                                    <span style="color: #94a3b8;">感谢提供这些细节，这很有帮助。</span><br><br>
+                                    3. <strong>I'd be happy to help with this.</strong><br>
+                                    <span style="color: #94a3b8;">我很乐意帮忙处理这个。</span><br><br>
+                                    4. <strong>Let me take a look and get back to you.</strong><br>
+                                    <span style="color: #94a3b8;">让我看一下，稍后回复你。</span><br><br>
+                                    5. <strong>Could you tell me more about the issue?</strong><br>
+                                    <span style="color: #94a3b8;">你能告诉我更多关于这个问题的情况吗？</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🔁 复习巩固</h5>
+                                <p>用英语复述今天学的内容，写 3 句英文小结</p>
+                                <span class="task-tag tag-review">复习 30min</span>
+                                <div style="margin-top: 12px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                    <strong style="color: #60a5fa;">复习任务：</strong><br>
+                                    1️⃣ 回放你跟读的录音，和原音对比，找出差距<br>
+                                    2️⃣ 不看文字，尝试用英语说出今天学的 5 个句子<br>
+                                    3️⃣ 写下 3 句英文小结，例如：<br>
+                                    <code style="display: block; margin-top: 8px; padding: 10px; background: #0f172a; border-radius: 6px; font-size: 0.85em;">
+                                    Today I learned 5 greeting sentences. I practiced with GPT for 30 minutes. My pronunciation of "details" needs more work.
+                                    </code>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 2 -->
+            <div class="day-plan">
+                <div class="day-header">
+                    <h4>📌 Day 2 - 报价练习</h4>
+                    <span class="date-badge">学会谈价格</span>
+                </div>
+                <div class="day-content">
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🎧 听力训练：华尔街英语 Unit 2</h5>
+                                <p>继续用三遍法练习第二个单元</p>
+                                <span class="task-tag tag-listening">听力 30min</span>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🗣️ 口语练习：报价场景</h5>
+                                <p>和 GPT 练习如何向客户报价</p>
+                                <span class="task-tag tag-speaking">口语 30min</span>
+                                <div style="margin-top: 12px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                    <strong style="color: #4ade80;">GPT 指令：</strong><br>
+                                    <code style="display: block; margin-top: 10px; padding: 12px; background: #0f172a; border-radius: 6px; font-size: 0.9em;">
+                                    You are a potential client on Fiverr. You want to hire me to fix a React bug. Ask me about my pricing and what's included. I'll practice explaining my packages and giving you a quote. Please correct my English and suggest better ways to say things.
+                                    </code>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>📚 场景学习：报价句型</h5>
+                                <p>学习并背诵以下 5 个报价相关句子</p>
+                                <span class="task-tag tag-learning">学习 30min</span>
+                                <div style="margin-top: 12px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                    <strong style="color: #fbbf24;">今日必背句型：</strong><br><br>
+                                    1. <strong>For this scope, I can offer $60.</strong><br>
+                                    <span style="color: #94a3b8;">对于这个范围，我可以报价 60 美元。</span><br><br>
+                                    2. <strong>I'd recommend the Standard package for this.</strong><br>
+                                    <span style="color: #94a3b8;">我建议你选择标准套餐。</span><br><br>
+                                    3. <strong>If it turns out to be bigger, I'll let you know first.</strong><br>
+                                    <span style="color: #94a3b8;">如果工作量比预期大，我会先告诉你。</span><br><br>
+                                    4. <strong>The price includes one round of revisions.</strong><br>
+                                    <span style="color: #94a3b8;">价格包含一次修改。</span><br><br>
+                                    5. <strong>I can send you a custom offer if you'd like.</strong><br>
+                                    <span style="color: #94a3b8;">如果你愿意，我可以给你发一个定制报价。</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🔁 复习巩固</h5>
+                                <p>复习 Day 1 + Day 2 的句型，录音对比</p>
+                                <span class="task-tag tag-review">复习 30min</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 3 -->
+            <div class="day-plan">
+                <div class="day-header">
+                    <h4>📌 Day 3 - 需求确认</h4>
+                    <span class="date-badge">学会问问题</span>
+                </div>
+                <div class="day-content">
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🎧 听力训练：华尔街英语 Unit 3</h5>
+                                <p>三遍法练习，重点关注疑问句的语调</p>
+                                <span class="task-tag tag-listening">听力 30min</span>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🗣️ 口语练习：确认需求</h5>
+                                <p>练习向客户提问，了解项目细节</p>
+                                <span class="task-tag tag-speaking">口语 30min</span>
+                                <div style="margin-top: 12px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                    <strong style="color: #4ade80;">GPT 指令：</strong><br>
+                                    <code style="display: block; margin-top: 10px; padding: 12px; background: #0f172a; border-radius: 6px; font-size: 0.9em;">
+                                    You are a client who wants to hire me but hasn't given me enough details about the project. Give me vague descriptions of your problem. I'll practice asking clarifying questions to understand what you really need. Correct my English as we go.
+                                    </code>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>📚 场景学习：提问句型</h5>
+                                <span class="task-tag tag-learning">学习 30min</span>
+                                <div style="margin-top: 12px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                    <strong style="color: #fbbf24;">今日必背句型：</strong><br><br>
+                                    1. <strong>What's the expected outcome you're looking for?</strong><br>
+                                    <span style="color: #94a3b8;">你期望的结果是什么？</span><br><br>
+                                    2. <strong>Do you have a deadline in mind?</strong><br>
+                                    <span style="color: #94a3b8;">你有截止日期吗？</span><br><br>
+                                    3. <strong>Can you share the error message or screenshot?</strong><br>
+                                    <span style="color: #94a3b8;">你能分享错误信息或截图吗？</span><br><br>
+                                    4. <strong>What tech stack are you using?</strong><br>
+                                    <span style="color: #94a3b8;">你用的是什么技术栈？</span><br><br>
+                                    5. <strong>Is this for a production site or a development project?</strong><br>
+                                    <span style="color: #94a3b8;">这是生产环境还是开发项目？</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🔁 复习巩固</h5>
+                                <p>复习前三天所有句型，尝试串联成完整对话</p>
+                                <span class="task-tag tag-review">复习 30min</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 4 -->
+            <div class="day-plan">
+                <div class="day-header">
+                    <h4>📌 Day 4 - 解释方案</h4>
+                    <span class="date-badge">学会说明做法</span>
+                </div>
+                <div class="day-content">
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🎧 听力训练：华尔街英语 Unit 4</h5>
+                                <p>三遍法练习，注意连读和弱读</p>
+                                <span class="task-tag tag-listening">听力 30min</span>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🗣️ 口语练习：解释技术方案</h5>
+                                <p>练习用简单英语解释你的工作方法</p>
+                                <span class="task-tag tag-speaking">口语 30min</span>
+                                <div style="margin-top: 12px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                    <strong style="color: #4ade80;">GPT 指令：</strong><br>
+                                    <code style="display: block; margin-top: 10px; padding: 12px; background: #0f172a; border-radius: 6px; font-size: 0.9em;">
+                                    You are a non-technical client. You hired me to fix a bug in your React website. Ask me to explain how I'm going to fix it in simple terms. I'll practice explaining technical work in plain English. Tell me if my explanation is too technical or confusing.
+                                    </code>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>📚 场景学习：解释方案句型</h5>
+                                <span class="task-tag tag-learning">学习 30min</span>
+                                <div style="margin-top: 12px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                    <strong style="color: #fbbf24;">今日必背句型：</strong><br><br>
+                                    1. <strong>Here's how I'd approach this...</strong><br>
+                                    <span style="color: #94a3b8;">我会这样处理这个问题...</span><br><br>
+                                    2. <strong>The first step would be to...</strong><br>
+                                    <span style="color: #94a3b8;">第一步是...</span><br><br>
+                                    3. <strong>I'll keep you updated as I go.</strong><br>
+                                    <span style="color: #94a3b8;">我会随时向你更新进度。</span><br><br>
+                                    4. <strong>In simple terms, the issue is...</strong><br>
+                                    <span style="color: #94a3b8;">简单来说，问题是...</span><br><br>
+                                    5. <strong>Once I fix this, you should see...</strong><br>
+                                    <span style="color: #94a3b8;">修复后，你应该会看到...</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🔁 复习巩固</h5>
+                                <p>模拟一个完整的客户对话：问候→确认需求→报价→解释方案</p>
+                                <span class="task-tag tag-review">复习 30min</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 5 -->
+            <div class="day-plan">
+                <div class="day-header">
+                    <h4>📌 Day 5 - 时间管理</h4>
+                    <span class="date-badge">学会谈时间</span>
+                </div>
+                <div class="day-content">
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🎧 听力训练：华尔街英语 Unit 5</h5>
+                                <span class="task-tag tag-listening">听力 30min</span>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🗣️ 口语练习：讨论时间和交付</h5>
+                                <span class="task-tag tag-speaking">口语 30min</span>
+                                <div style="margin-top: 12px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                    <strong style="color: #4ade80;">GPT 指令：</strong><br>
+                                    <code style="display: block; margin-top: 10px; padding: 12px; background: #0f172a; border-radius: 6px; font-size: 0.9em;">
+                                    You are a client who needs work done urgently. Ask me about delivery time, when I can start, and if I can work faster. I'll practice negotiating timelines and setting expectations. Correct my English.
+                                    </code>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>📚 场景学习：时间相关句型</h5>
+                                <span class="task-tag tag-learning">学习 30min</span>
+                                <div style="margin-top: 12px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                    <strong style="color: #fbbf24;">今日必背句型：</strong><br><br>
+                                    1. <strong>I can have this done in 2 days.</strong><br>
+                                    <span style="color: #94a3b8;">我可以在2天内完成。</span><br><br>
+                                    2. <strong>I'll send you a progress update tomorrow.</strong><br>
+                                    <span style="color: #94a3b8;">我明天会给你发进度更新。</span><br><br>
+                                    3. <strong>Let me know if you need it faster.</strong><br>
+                                    <span style="color: #94a3b8;">如果你需要更快，请告诉我。</span><br><br>
+                                    4. <strong>I'm based in UTC+8, so I can work overnight for you.</strong><br>
+                                    <span style="color: #94a3b8;">我在 UTC+8 时区，可以为你通宵工作。</span><br><br>
+                                    5. <strong>I can start as soon as you place the order.</strong><br>
+                                    <span style="color: #94a3b8;">你下单后我就可以开始。</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🔁 复习巩固</h5>
+                                <p>复习本周所有 25 个句型，录音检查</p>
+                                <span class="task-tag tag-review">复习 30min</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 6-7 -->
+            <div class="day-plan">
+                <div class="day-header">
+                    <h4>📌 Day 6-7 - 周末复习</h4>
+                    <span class="date-badge">巩固强化</span>
+                </div>
+                <div class="day-content">
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🎧 听力复习：重听 Unit 1-5</h5>
+                                <p>不看文字，测试自己能听懂多少</p>
+                                <span class="task-tag tag-listening">听力 30min × 2天</span>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🗣️ 口语测试：完整客户对话模拟</h5>
+                                <p>和 GPT 进行一次完整的客户沟通模拟（从问候到成交）</p>
+                                <span class="task-tag tag-speaking">口语 30min × 2天</span>
+                                <div style="margin-top: 12px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                    <strong style="color: #4ade80;">GPT 指令（完整模拟）：</strong><br>
+                                    <code style="display: block; margin-top: 10px; padding: 12px; background: #0f172a; border-radius: 6px; font-size: 0.9em;">
+                                    Let's do a complete Fiverr client conversation roleplay. You are a client who found my React bug fixing gig. Start by describing your problem. I'll respond as a professional freelancer - greeting you, asking questions, explaining my approach, giving a quote, and closing the deal. After we finish, give me detailed feedback on my English.
+                                    </code>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>📚 句型总复习</h5>
+                                <p>把本周 25 个句型全部默写一遍，检查拼写</p>
+                                <span class="task-tag tag-learning">学习 30min × 2天</span>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="this.classList.toggle('checked')"></div>
+                            <div class="task-content">
+                                <h5>🔁 周总结</h5>
+                                <p>用英语写一段 100 字的周总结，发给 GPT 批改</p>
+                                <span class="task-tag tag-review">复习 30min × 2天</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 50 Essential Sentences Section -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="emoji">💬</span>
+                Fiverr 客户沟通 50 句必背句型
+            </h2>
+            
+            <p style="color: #94a3b8; margin-bottom: 25px;">
+                这 50 个句子覆盖了 Fiverr 客户沟通的所有核心场景。每天早上花 10 分钟大声朗读，30 天后你会发现自己能脱口而出。
+            </p>
+
+            <div class="sentence-grid">
+                <!-- Opening & Greeting -->
+                <div class="sentence-card">
+                    <div class="category">🤝 开场问候 (1-5)</div>
+                    <div class="english">1. Hi, thanks for reaching out!</div>
+                    <div class="chinese">嗨，感谢你联系我！</div>
+                    <div class="usage"><strong>使用场景：</strong>收到客户第一条消息时的标准开场</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">🤝 开场问候</div>
+                    <div class="english">2. Thanks for the details – that really helps.</div>
+                    <div class="chinese">感谢提供这些细节，这很有帮助。</div>
+                    <div class="usage"><strong>使用场景：</strong>客户发来项目信息后的回应</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">🤝 开场问候</div>
+                    <div class="english">3. I'd be happy to help with this.</div>
+                    <div class="chinese">我很乐意帮忙处理这个。</div>
+                    <div class="usage"><strong>使用场景：</strong>表达愿意接单的意愿</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">🤝 开场问候</div>
+                    <div class="english">4. This is exactly the kind of work I do.</div>
+                    <div class="chinese">这正是我擅长的工作类型。</div>
+                    <div class="usage"><strong>使用场景：</strong>强调你的专业匹配度</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">🤝 开场问候</div>
+                    <div class="english">5. Let me take a look and get back to you.</div>
+                    <div class="chinese">让我看一下，稍后回复你。</div>
+                    <div class="usage"><strong>使用场景：</strong>需要时间评估时的回应</div>
+                </div>
+
+                <!-- Asking Questions -->
+                <div class="sentence-card">
+                    <div class="category">❓ 确认需求 (6-15)</div>
+                    <div class="english">6. Could you tell me more about the issue?</div>
+                    <div class="chinese">你能告诉我更多关于这个问题的情况吗？</div>
+                    <div class="usage"><strong>使用场景：</strong>需要更多信息时</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">❓ 确认需求</div>
+                    <div class="english">7. What's the expected outcome you're looking for?</div>
+                    <div class="chinese">你期望的结果是什么？</div>
+                    <div class="usage"><strong>使用场景：</strong>了解客户的目标</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">❓ 确认需求</div>
+                    <div class="english">8. Do you have a deadline in mind?</div>
+                    <div class="chinese">你有截止日期吗？</div>
+                    <div class="usage"><strong>使用场景：</strong>确认时间要求</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">❓ 确认需求</div>
+                    <div class="english">9. Can you share the error message or screenshot?</div>
+                    <div class="chinese">你能分享错误信息或截图吗？</div>
+                    <div class="usage"><strong>使用场景：</strong>需要技术细节时</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">❓ 确认需求</div>
+                    <div class="english">10. What tech stack are you using?</div>
+                    <div class="chinese">你用的是什么技术栈？</div>
+                    <div class="usage"><strong>使用场景：</strong>了解技术环境</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">❓ 确认需求</div>
+                    <div class="english">11. Is this for a production site or development?</div>
+                    <div class="chinese">这是生产环境还是开发环境？</div>
+                    <div class="usage"><strong>使用场景：</strong>评估风险级别</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">❓ 确认需求</div>
+                    <div class="english">12. How would you like me to access the code?</div>
+                    <div class="chinese">你希望我如何访问代码？</div>
+                    <div class="usage"><strong>使用场景：</strong>确认代码访问方式</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">❓ 确认需求</div>
+                    <div class="english">13. Is there anything else I should know?</div>
+                    <div class="chinese">还有什么我应该知道的吗？</div>
+                    <div class="usage"><strong>使用场景：</strong>确保没有遗漏信息</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">❓ 确认需求</div>
+                    <div class="english">14. When did this issue first appear?</div>
+                    <div class="chinese">这个问题是什么时候开始出现的？</div>
+                    <div class="usage"><strong>使用场景：</strong>了解问题历史</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">❓ 确认需求</div>
+                    <div class="english">15. Have you tried anything to fix it so far?</div>
+                    <div class="chinese">你之前尝试过什么方法修复吗？</div>
+                    <div class="usage"><strong>使用场景：</strong>了解已尝试的解决方案</div>
+                </div>
+
+                <!-- Pricing -->
+                <div class="sentence-card">
+                    <div class="category">💰 报价 (16-25)</div>
+                    <div class="english">16. For this scope, I can offer $60.</div>
+                    <div class="chinese">对于这个范围，我可以报价 60 美元。</div>
+                    <div class="usage"><strong>使用场景：</strong>给出具体报价</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">💰 报价</div>
+                    <div class="english">17. I'd recommend the Standard package for this.</div>
+                    <div class="chinese">我建议你选择标准套餐。</div>
+                    <div class="usage"><strong>使用场景：</strong>推荐合适的套餐</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">💰 报价</div>
+                    <div class="english">18. If it turns out to be bigger, I'll let you know first.</div>
+                    <div class="chinese">如果工作量比预期大，我会先告诉你。</div>
+                    <div class="usage"><strong>使用场景：</strong>设定预期，避免纠纷</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">💰 报价</div>
+                    <div class="english">19. The price includes one round of revisions.</div>
+                    <div class="chinese">价格包含一次修改。</div>
+                    <div class="usage"><strong>使用场景：</strong>说明服务内容</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">💰 报价</div>
+                    <div class="english">20. I can send you a custom offer if you'd like.</div>
+                    <div class="chinese">如果你愿意，我可以给你发一个定制报价。</div>
+                    <div class="usage"><strong>使用场景：</strong>引导客户下单</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">💰 报价</div>
+                    <div class="english">21. We can start with a small task to test the fit.</div>
+                    <div class="chinese">我们可以先从一个小任务开始，看看是否合适。</div>
+                    <div class="usage"><strong>使用场景：</strong>降低客户决策门槛</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">💰 报价</div>
+                    <div class="english">22. That's outside the scope of this package.</div>
+                    <div class="chinese">这超出了这个套餐的范围。</div>
+                    <div class="usage"><strong>使用场景：</strong>礼貌拒绝额外要求</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">💰 报价</div>
+                    <div class="english">23. I can add that for an extra $20.</div>
+                    <div class="chinese">我可以加 20 美元来做这个。</div>
+                    <div class="usage"><strong>使用场景：</strong>追加服务报价</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">💰 报价</div>
+                    <div class="english">24. Let me know if the budget works for you.</div>
+                    <div class="chinese">请告诉我这个预算是否可以接受。</div>
+                    <div class="usage"><strong>使用场景：</strong>确认客户预算</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">💰 报价</div>
+                    <div class="english">25. I'm flexible on pricing for the right project.</div>
+                    <div class="chinese">对于合适的项目，我在价格上可以灵活一些。</div>
+                    <div class="usage"><strong>使用场景：</strong>表示愿意协商</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- More Sentences Section -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="emoji">💬</span>
+                必背句型（续）：解释方案、跟进、结束
+            </h2>
+
+            <div class="sentence-grid">
+                <!-- Explaining -->
+                <div class="sentence-card">
+                    <div class="category">🔧 解释方案 (26-35)</div>
+                    <div class="english">26. Here's how I'd approach this...</div>
+                    <div class="chinese">我会这样处理这个问题...</div>
+                    <div class="usage"><strong>使用场景：</strong>开始解释你的方案</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">🔧 解释方案</div>
+                    <div class="english">27. The first step would be to...</div>
+                    <div class="chinese">第一步是...</div>
+                    <div class="usage"><strong>使用场景：</strong>分步骤说明</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">🔧 解释方案</div>
+                    <div class="english">28. I'll keep you updated as I go.</div>
+                    <div class="chinese">我会随时向你更新进度。</div>
+                    <div class="usage"><strong>使用场景：</strong>承诺沟通</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">🔧 解释方案</div>
+                    <div class="english">29. In simple terms, the issue is...</div>
+                    <div class="chinese">简单来说，问题是...</div>
+                    <div class="usage"><strong>使用场景：</strong>用简单语言解释技术问题</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">🔧 解释方案</div>
+                    <div class="english">30. Once I fix this, you should see...</div>
+                    <div class="chinese">修复后，你应该会看到...</div>
+                    <div class="usage"><strong>使用场景：</strong>描述预期结果</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">🔧 解释方案</div>
+                    <div class="english">31. I found the root cause of the problem.</div>
+                    <div class="chinese">我找到了问题的根本原因。</div>
+                    <div class="usage"><strong>使用场景：</strong>报告诊断结果</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">🔧 解释方案</div>
+                    <div class="english">32. This is a common issue with React apps.</div>
+                    <div class="chinese">这是 React 应用的常见问题。</div>
+                    <div class="usage"><strong>使用场景：</strong>让客户安心</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">🔧 解释方案</div>
+                    <div class="english">33. I'll write clean code with comments.</div>
+                    <div class="chinese">我会写干净的代码并加注释。</div>
+                    <div class="usage"><strong>使用场景：</strong>强调代码质量</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">🔧 解释方案</div>
+                    <div class="english">34. I'll test it thoroughly before delivery.</div>
+                    <div class="chinese">交付前我会彻底测试。</div>
+                    <div class="usage"><strong>使用场景：</strong>承诺质量</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">🔧 解释方案</div>
+                    <div class="english">35. Let me know if you have any questions.</div>
+                    <div class="chinese">如果有任何问题请告诉我。</div>
+                    <div class="usage"><strong>使用场景：</strong>邀请客户提问</div>
+                </div>
+
+                <!-- Timeline -->
+                <div class="sentence-card">
+                    <div class="category">⏰ 时间安排 (36-40)</div>
+                    <div class="english">36. I can have this done in 2 days.</div>
+                    <div class="chinese">我可以在2天内完成。</div>
+                    <div class="usage"><strong>使用场景：</strong>承诺交付时间</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">⏰ 时间安排</div>
+                    <div class="english">37. I'll send you a progress update tomorrow.</div>
+                    <div class="chinese">我明天会给你发进度更新。</div>
+                    <div class="usage"><strong>使用场景：</strong>设定沟通节点</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">⏰ 时间安排</div>
+                    <div class="english">38. I can start as soon as you place the order.</div>
+                    <div class="chinese">你下单后我就可以开始。</div>
+                    <div class="usage"><strong>使用场景：</strong>表示准备就绪</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">⏰ 时间安排</div>
+                    <div class="english">39. I'm based in UTC+8, great for overnight work.</div>
+                    <div class="chinese">我在 UTC+8 时区，适合通宵工作。</div>
+                    <div class="usage"><strong>使用场景：</strong>强调时区优势</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">⏰ 时间安排</div>
+                    <div class="english">40. I need a bit more time for this one.</div>
+                    <div class="chinese">这个我需要多一点时间。</div>
+                    <div class="usage"><strong>使用场景：</strong>诚实沟通时间需求</div>
+                </div>
+
+                <!-- Follow-up -->
+                <div class="sentence-card">
+                    <div class="category">📩 跟进 (41-45)</div>
+                    <div class="english">41. Just checking in – any questions so far?</div>
+                    <div class="chinese">跟进一下，目前有什么问题吗？</div>
+                    <div class="usage"><strong>使用场景：</strong>温和跟进</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">📩 跟进</div>
+                    <div class="english">42. Let me know when you're ready to proceed.</div>
+                    <div class="chinese">准备好了请告诉我。</div>
+                    <div class="usage"><strong>使用场景：</strong>等待客户决定</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">📩 跟进</div>
+                    <div class="english">43. Feel free to reach out if anything comes up.</div>
+                    <div class="chinese">有任何问题随时联系我。</div>
+                    <div class="usage"><strong>使用场景：</strong>保持开放沟通</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">📩 跟进</div>
+                    <div class="english">44. I'm here if you need any clarification.</div>
+                    <div class="chinese">如果需要任何说明，我随时在。</div>
+                    <div class="usage"><strong>使用场景：</strong>表示随时可用</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">📩 跟进</div>
+                    <div class="english">45. No rush – take your time to decide.</div>
+                    <div class="chinese">不着急，慢慢考虑。</div>
+                    <div class="usage"><strong>使用场景：</strong>减轻客户压力</div>
+                </div>
+
+                <!-- Closing -->
+                <div class="sentence-card">
+                    <div class="category">✅ 结束 (46-50)</div>
+                    <div class="english">46. Looking forward to working with you!</div>
+                    <div class="chinese">期待与你合作！</div>
+                    <div class="usage"><strong>使用场景：</strong>积极结束对话</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">✅ 结束</div>
+                    <div class="english">47. Thanks again, and talk soon.</div>
+                    <div class="chinese">再次感谢，回头聊。</div>
+                    <div class="usage"><strong>使用场景：</strong>友好告别</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">✅ 结束</div>
+                    <div class="english">48. I've delivered the work – please review.</div>
+                    <div class="chinese">我已经交付了，请查看。</div>
+                    <div class="usage"><strong>使用场景：</strong>交付通知</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">✅ 结束</div>
+                    <div class="english">49. Let me know if you need any adjustments.</div>
+                    <div class="chinese">如果需要任何调整请告诉我。</div>
+                    <div class="usage"><strong>使用场景：</strong>交付后跟进</div>
+                </div>
+                
+                <div class="sentence-card">
+                    <div class="category">✅ 结束</div>
+                    <div class="english">50. It was great working with you!</div>
+                    <div class="chinese">很高兴与你合作！</div>
+                    <div class="usage"><strong>使用场景：</strong>项目完成后</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GPT Practice Prompts Section -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="emoji">🤖</span>
+                ChatGPT 语音练习指令大全
+            </h2>
+            
+            <p style="color: #94a3b8; margin-bottom: 25px;">
+                以下是 30 个可以直接复制到 ChatGPT App 的语音练习指令，覆盖各种客户沟通场景。每天选 1-2 个练习。
+            </p>
+
+            <!-- Basic Scenarios -->
+            <div class="prompt-card">
+                <div class="scenario">🎯 场景 1：自我介绍</div>
+                <div class="prompt-text">
+Let's practice English conversation. I'm a freelance web developer learning to communicate with clients. Please ask me to introduce myself, then give me feedback on my grammar and pronunciation. Speak slowly and use simple words. After I answer, ask follow-up questions about my work experience and skills.
+                </div>
+                <ul class="tips">
+                    <li>练习时长：10-15 分钟</li>
+                    <li>重点：流利度、自信表达</li>
+                </ul>
+            </div>
+
+            <div class="prompt-card">
+                <div class="scenario">🎯 场景 2：报价练习</div>
+                <div class="prompt-text">
+You are a potential client on Fiverr. You want to hire me to fix a React bug in your website. Ask me about my pricing, what's included in each package, and how long it will take. I'll practice explaining my services and giving you a quote. Please correct my English and suggest more professional ways to say things.
+                </div>
+                <ul class="tips">
+                    <li>练习时长：15 分钟</li>
+                    <li>重点：清晰报价、解释套餐差异</li>
+                </ul>
+            </div>
+
+            <div class="prompt-card">
+                <div class="scenario">🎯 场景 3：需求确认</div>
+                <div class="prompt-text">
+You are a client who wants to hire me but hasn't given me enough details about the project. Give me vague descriptions like "my website is broken" or "something is wrong with the form". I'll practice asking clarifying questions to understand what you really need. Correct my English and tell me if my questions are clear.
+                </div>
+                <ul class="tips">
+                    <li>练习时长：15 分钟</li>
+                    <li>重点：提问技巧、获取关键信息</li>
+                </ul>
+            </div>
+
+            <div class="prompt-card">
+                <div class="scenario">🎯 场景 4：解释技术问题（给非技术客户）</div>
+                <div class="prompt-text">
+You are a non-technical client. You hired me to fix a bug in your React website. Ask me to explain what the problem was and how I fixed it. I need to practice explaining technical work in simple, plain English that anyone can understand. Tell me if my explanation is too technical or confusing.
+                </div>
+                <ul class="tips">
+                    <li>练习时长：15 分钟</li>
+                    <li>重点：简化技术语言、类比说明</li>
+                </ul>
+            </div>
+
+            <div class="prompt-card">
+                <div class="scenario">🎯 场景 5：处理着急的客户</div>
+                <div class="prompt-text">
+You are an urgent client. Your website is down and you need it fixed immediately. You're stressed and asking me to work faster. I'll practice staying calm, setting realistic expectations, and negotiating timelines professionally. Give me feedback on my tone and word choices.
+                </div>
+                <ul class="tips">
+                    <li>练习时长：15 分钟</li>
+                    <li>重点：保持冷静、专业应对压力</li>
+                </ul>
+            </div>
+
+            <div class="prompt-card">
+                <div class="scenario">🎯 场景 6：处理预算有限的客户</div>
+                <div class="prompt-text">
+You are a client with a limited budget. You want me to do a lot of work but can only pay $30. I'll practice politely explaining my pricing, offering alternatives like smaller scope or phased work, and maintaining my value without being rude. Correct my English and suggest diplomatic phrases.
+                </div>
+                <ul class="tips">
+                    <li>练习时长：15 分钟</li>
+                    <li>重点：礼貌拒绝、提供替代方案</li>
+                </ul>
+            </div>
+
+            <div class="prompt-card">
+                <div class="scenario">🎯 场景 7：完整客户对话模拟</div>
+                <div class="prompt-text">
+Let's do a complete Fiverr client conversation roleplay from start to finish. You are a client who found my React bug fixing gig. Start by describing your problem. I'll respond as a professional freelancer - greeting you, asking questions, explaining my approach, giving a quote, and closing the deal. After we finish the entire conversation, give me detailed feedback on my English, professionalism, and areas to improve.
+                </div>
+                <ul class="tips">
+                    <li>练习时长：20-30 分钟</li>
+                    <li>重点：完整流程、综合能力</li>
+                </ul>
+            </div>
+
+            <div class="prompt-card">
+                <div class="scenario">🎯 场景 8：语音会议练习</div>
+                <div class="prompt-text">
+Let's simulate a video call with a client. You are a client who wants to discuss a project before hiring me. Ask me questions about my experience, how I work, my availability, and my process. I'll practice speaking clearly and professionally as if we're on a real Zoom call. Give me feedback on my speaking pace, clarity, and confidence.
+                </div>
+                <ul class="tips">
+                    <li>练习时长：20 分钟</li>
+                    <li>重点：语速控制、清晰表达</li>
+                </ul>
+            </div>
+
+            <div class="prompt-card">
+                <div class="scenario">🎯 场景 9：处理客户投诉</div>
+                <div class="prompt-text">
+You are an unhappy client. The work I delivered doesn't match what you expected. You're frustrated and want me to fix it or give a refund. I'll practice handling complaints professionally - apologizing appropriately, understanding the issue, and proposing solutions. Help me use diplomatic language.
+                </div>
+                <ul class="tips">
+                    <li>练习时长：15 分钟</li>
+                    <li>重点：道歉技巧、解决问题</li>
+                </ul>
+            </div>
+
+            <div class="prompt-card">
+                <div class="scenario">🎯 场景 10：拒绝不合适的项目</div>
+                <div class="prompt-text">
+You are a client asking me to do work that's outside my expertise or against Fiverr rules (like working outside the platform). I'll practice politely declining while maintaining a good relationship. Help me find professional ways to say no without being rude or burning bridges.
+                </div>
+                <ul class="tips">
+                    <li>练习时长：10 分钟</li>
+                    <li>重点：礼貌拒绝、保持专业</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Listening Training Method -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="emoji">🎧</span>
+                听力训练详细方法
+            </h2>
+
+            <div class="tips-box">
+                <h4>🎯 核心原则：精听 > 泛听</h4>
+                <ul>
+                    <li>精听 1 小时的效果 > 泛听 10 小时</li>
+                    <li>听不懂的地方反复听，直到听懂为止</li>
+                    <li>跟读模仿是提升听力的最快方法</li>
+                    <li>每天只听 3-5 分钟的新材料，但要听透</li>
+                </ul>
+            </div>
+
+            <h3 style="color: #60a5fa; margin: 30px 0 20px;">📋 三遍精听法（每天 30 分钟）</h3>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>第一遍：盲听（5 分钟）</h4>
+                        <p>
+                            <strong>操作：</strong>不看任何文字，只听音频<br>
+                            <strong>目标：</strong>抓住大意，记录听不懂的时间点<br>
+                            <strong>心态：</strong>听不懂很正常，这是在测试你的真实水平<br><br>
+                            <strong style="color: #fbbf24;">具体做法：</strong><br>
+                            • 找一个安静的环境，戴上耳机<br>
+                            • 播放音频，尽量集中注意力<br>
+                            • 用纸笔记下：大概在第几秒听不懂<br>
+                            • 听完后，用中文写下你听懂的内容
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>第二遍：对照文稿听（10 分钟）</h4>
+                        <p>
+                            <strong>操作：</strong>打开字幕/文稿，边看边听<br>
+                            <strong>目标：</strong>找出听不懂的原因<br><br>
+                            <strong style="color: #fbbf24;">标记三类问题：</strong><br>
+                            🔴 <strong>生词：</strong>这个词我不认识 → 查词典，记下来<br>
+                            🟡 <strong>认识但没听出：</strong>这个词我认识，但听的时候没反应过来 → 重点练习<br>
+                            🟢 <strong>连读/弱读：</strong>几个词连在一起，听起来像一个词 → 标记出来<br><br>
+                            <strong>每天最多记 10 个新词</strong>，不要贪多
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>第三遍：跟读模仿（15 分钟）</h4>
+                        <p>
+                            <strong>操作：</strong>播一句，暂停，跟读一句<br>
+                            <strong>目标：</strong>模仿语调、节奏、连读<br><br>
+                            <strong style="color: #fbbf24;">具体步骤：</strong><br>
+                            1️⃣ 播放一句话（3-8 秒）<br>
+                            2️⃣ 暂停音频<br>
+                            3️⃣ 大声跟读，尽量模仿原音的语调和节奏<br>
+                            4️⃣ 用手机录下自己的声音<br>
+                            5️⃣ 对比原音和自己的录音，找差距<br>
+                            6️⃣ 重复 3-5 遍，直到接近原音<br><br>
+                            <strong style="color: #4ade80;">关键：</strong>不要默读，一定要大声说出来！
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="color: #60a5fa; margin: 30px 0 20px;">📚 推荐听力材料使用顺序</h3>
+
+            <div class="material-card">
+                <div class="material-icon">📖</div>
+                <div class="material-info">
+                    <h4>第 1-2 周：华尔街英语基础单元</h4>
+                    <p>你已有的材料，难度适中，有配套文稿，非常适合精听</p>
+                </div>
+                <span class="material-badge badge-primary">主力材料</span>
+            </div>
+
+            <div class="material-card">
+                <div class="material-icon">🎬</div>
+                <div class="material-info">
+                    <h4>第 3-4 周：恶魔奶爸听力训练营</h4>
+                    <p>专门的听力训练课程，有方法论指导</p>
+                </div>
+                <span class="material-badge badge-primary">主力材料</span>
+            </div>
+
+            <div class="material-card">
+                <div class="material-icon">📚</div>
+                <div class="material-info">
+                    <h4>第 5-8 周：One Story a Day</h4>
+                    <p>故事类材料，语速适中，适合泛听 + 精听结合</p>
+                </div>
+                <span class="material-badge badge-secondary">进阶材料</span>
+            </div>
+
+            <div class="material-card">
+                <div class="material-icon">🎥</div>
+                <div class="material-info">
+                    <h4>第 9-12 周：YouTube 技术视频</h4>
+                    <p>真实场景，语速较快，适合挑战提升</p>
+                </div>
+                <span class="material-badge badge-secondary">进阶材料</span>
+            </div>
+        </section>
+
+        <!-- Weekly Review Template -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="emoji">📊</span>
+                每周自测与复盘模板
+            </h2>
+
+            <p style="color: #94a3b8; margin-bottom: 25px;">
+                每周日花 30 分钟做一次自测和复盘，记录你的进步。
+            </p>
+
+            <div style="background: linear-gradient(145deg, #1a2d4a, #162540); border-radius: 16px; padding: 30px; border: 1px solid rgba(255,255,255,0.1);">
+                <h4 style="color: #60a5fa; margin-bottom: 20px;">📝 周复盘模板（用英语填写）</h4>
+                
+                <div style="background: #0f172a; padding: 20px; border-radius: 12px; font-family: monospace; line-height: 2;">
+                    <p><strong style="color: #4ade80;">Week #:</strong> ___</p>
+                    <p><strong style="color: #4ade80;">Date:</strong> ___ to ___</p>
+                    <br>
+                    <p><strong style="color: #fbbf24;">1. Listening Progress:</strong></p>
+                    <p>• Hours practiced this week: ___</p>
+                    <p>• Materials used: ___</p>
+                    <p>• New words learned: ___</p>
+                    <p>• Estimated comprehension: ___% (up from ___% last week)</p>
+                    <br>
+                    <p><strong style="color: #fbbf24;">2. Speaking Progress:</strong></p>
+                    <p>• GPT conversations this week: ___</p>
+                    <p>• Topics practiced: ___</p>
+                    <p>• Biggest improvement: ___</p>
+                    <p>• Still struggling with: ___</p>
+                    <br>
+                    <p><strong style="color: #fbbf24;">3. Sentences Mastered:</strong></p>
+                    <p>• Total sentences memorized: ___ / 50</p>
+                    <p>• Can say fluently without thinking: ___ / 50</p>
+                    <br>
+                    <p><strong style="color: #fbbf24;">4. Real Practice:</strong></p>
+                    <p>• Did I use English with a real person this week? ___</p>
+                    <p>• Fiverr client conversations: ___</p>
+                    <br>
+                    <p><strong style="color: #fbbf24;">5. Next Week Focus:</strong></p>
+                    <p>• Main goal: ___</p>
+                    <p>• Specific skill to improve: ___</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 2 & 3 Overview -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="emoji">📈</span>
+                第二、三阶段概览
+            </h2>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px;">
+                <!-- Phase 2 -->
+                <div style="background: linear-gradient(145deg, #1e3a5f, #162d50); border-radius: 16px; padding: 30px; border-left: 4px solid #fbbf24;">
+                    <h3 style="color: #fbbf24; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <span>🚀</span> 第二阶段：能力提升（第 31-60 天）
+                    </h3>
+                    <p style="color: #94a3b8; margin-bottom: 20px;">目标：听力 40% → 60%，能进行 5-10 分钟的流利对话</p>
+                    
+                    <h4 style="color: #e2e8f0; margin-bottom: 15px;">每日任务调整：</h4>
+                    <ul style="color: #cbd5e1; list-style: none;">
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <span style="position: absolute; left: 0;">🎧</span>
+                            听力：One Story a Day + 友邻优课新闻
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <span style="position: absolute; left: 0;">🗣️</span>
+                            口语：GPT 复杂场景 + 每周 1 次真人对话
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <span style="position: absolute; left: 0;">📚</span>
+                            学习：小屁孩日记（口语化表达）
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <span style="position: absolute; left: 0;">🔁</span>
+                            复习：用英语写工作日志
+                        </li>
+                    </ul>
+                    
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(251, 191, 36, 0.1); border-radius: 10px;">
+                        <strong style="color: #fbbf24;">关键里程碑：</strong><br>
+                        <span style="color: #94a3b8;">能独立完成一次 Fiverr 客户语音通话</span>
+                    </div>
+                </div>
+
+                <!-- Phase 3 -->
+                <div style="background: linear-gradient(145deg, #1e3a5f, #162d50); border-radius: 16px; padding: 30px; border-left: 4px solid #4ade80;">
+                    <h3 style="color: #4ade80; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <span>🎯</span> 第三阶段：实战巩固（第 61-90 天）
+                    </h3>
+                    <p style="color: #94a3b8; margin-bottom: 20px;">目标：听力 60% → 70%+，能参加工作会议</p>
+                    
+                    <h4 style="color: #e2e8f0; margin-bottom: 15px;">每日任务调整：</h4>
+                    <ul style="color: #cbd5e1; list-style: none;">
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <span style="position: absolute; left: 0;">🎧</span>
+                            听力：YouTube 技术视频 + Podcast
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <span style="position: absolute; left: 0;">🗣️</span>
+                            口语：模拟工作会议 + 每周 2 次真人对话
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <span style="position: absolute; left: 0;">📚</span>
+                            学习：技术文档朗读 + 演讲练习
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <span style="position: absolute; left: 0;">🔁</span>
+                            复习：录制自我介绍视频
+                        </li>
+                    </ul>
+                    
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(74, 222, 128, 0.1); border-radius: 10px;">
+                        <strong style="color: #4ade80;">关键里程碑：</strong><br>
+                        <span style="color: #94a3b8;">能参加 30 分钟的英语工作会议</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="emoji">⚡</span>
+                快速参考卡片
+            </h2>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div style="background: linear-gradient(145deg, #243b55, #1d3048); border-radius: 16px; padding: 25px;">
+                    <h4 style="color: #f472b6; margin-bottom: 15px;">🎧 听力训练口诀</h4>
+                    <p style="color: #e2e8f0; line-height: 2;">
+                        盲听抓大意<br>
+                        对照找问题<br>
+                        跟读练语感<br>
+                        录音找差距
+                    </p>
+                </div>
+
+                <div style="background: linear-gradient(145deg, #243b55, #1d3048); border-radius: 16px; padding: 25px;">
+                    <h4 style="color: #4ade80; margin-bottom: 15px;">🗣️ 口语练习口诀</h4>
+                    <p style="color: #e2e8f0; line-height: 2;">
+                        先开口再完美<br>
+                        错了也要说<br>
+                        模仿是捷径<br>
+                        每天都要练
+                    </p>
+                </div>
+
+                <div style="background: linear-gradient(145deg, #243b55, #1d3048); border-radius: 16px; padding: 25px;">
+                    <h4 style="color: #fbbf24; margin-bottom: 15px;">📚 学习原则</h4>
+                    <p style="color: #e2e8f0; line-height: 2;">
+                        少而精 > 多而浅<br>
+                        场景化 > 背单词<br>
+                        输出 > 输入<br>
+                        坚持 > 方法
+                    </p>
+                </div>
+
+                <div style="background: linear-gradient(145deg, #243b55, #1d3048); border-radius: 16px; padding: 25px;">
+                    <h4 style="color: #60a5fa; margin-bottom: 15px;">⏰ 时间分配</h4>
+                    <p style="color: #e2e8f0; line-height: 2;">
+                        听力 30 分钟<br>
+                        口语 30 分钟<br>
+                        学习 30 分钟<br>
+                        复习 30 分钟
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Motivation Section -->
+        <section class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <h2 style="text-align: center; font-size: 1.8em; margin-bottom: 30px;">💪 坚持的力量</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center;">
+                <div>
+                    <div style="font-size: 3em; margin-bottom: 10px;">7</div>
+                    <div style="opacity: 0.9;">天后你会感到不同</div>
+                </div>
+                <div>
+                    <div style="font-size: 3em; margin-bottom: 10px;">30</div>
+                    <div style="opacity: 0.9;">天后你会看到变化</div>
+                </div>
+                <div>
+                    <div style="font-size: 3em; margin-bottom: 10px;">90</div>
+                    <div style="opacity: 0.9;">天后你会惊讶于自己</div>
+                </div>
+            </div>
+            
+            <p style="text-align: center; margin-top: 30px; font-size: 1.2em; opacity: 0.95;">
+                "The best time to start was yesterday. The second best time is now."
+            </p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>📅 计划生成日期：2024年12月</p>
+            <p style="margin-top: 10px;">专为 Fiverr 自由职业者设计 | 每天 2 小时 | 90 天突破</p>
+            <p style="margin-top: 20px; color: #4ade80;">🎯 记住：开口说比说得完美更重要！</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple checkbox toggle functionality
+        document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('click', function() {
+                this.classList.toggle('checked');
+                // Save to localStorage
+                const taskId = this.closest('.task-item').querySelector('h5').textContent;
+                const isChecked = this.classList.contains('checked');
+                localStorage.setItem(taskId, isChecked);
+            });
+            
+            // Load from localStorage
+            const taskId = checkbox.closest('.task-item').querySelector('h5').textContent;
+            if (localStorage.getItem(taskId) === 'true') {
+                checkbox.classList.add('checked');
+            }
+        });
+
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', function() {
+                this.closest('.accordion').classList.toggle('open');
+            });
+        });
+    </script>
+</body>
+</html>

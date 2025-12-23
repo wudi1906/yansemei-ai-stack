@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>90天英语突破计划 | Fiverr客户沟通专项</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-soft: #1e293b;
+      --card: #0f172a;
+      --accent: #60a5fa;
+      --accent-2: #34d399;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --danger: #f87171;
+      --warning: #fbbf24;
+      --ok: #86efac;
+      --border: #334155;
+      --pink: #f472b6;
+      --purple: #a78bfa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: linear-gradient(180deg, var(--bg) 0%, #0b1220 100%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft Yahei", sans-serif;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+    .container { max-width: 1300px; margin: 0 auto; padding: 20px; }
+    
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 50px 20px;
+      text-align: center;
+      border-radius: 0 0 30px 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+    }
+    header h1 { font-size: 2.5em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+    header .subtitle { font-size: 1.1em; opacity: 0.95; margin-bottom: 20px; }
+    header .methods {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+      font-size: 0.9em;
+    }
+    header .methods span {
+      background: rgba(255,255,255,0.2);
+      padding: 6px 14px;
+      border-radius: 20px;
+      backdrop-filter: blur(5px);
+    }
+    
+    /* Toolbar */
+    .toolbar {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin-bottom: 25px;
+      padding: 15px;
+      background: var(--bg-soft);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .btn {
+      background: linear-gradient(145deg, #1e3a5f, #162d50);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .btn.primary { background: linear-gradient(145deg, #3b82f6, #2563eb); }
+    .btn.success { background: linear-gradient(145deg, #10b981, #059669); }
+    .btn.warning { background: linear-gradient(145deg, #f59e0b, #d97706); }
+    
+    /* Progress */
+    .progress-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .progress-card {
+      background: linear-gradient(145deg, #1e3a5f, #162d50);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+    .progress-card .icon { font-size: 2em; margin-bottom: 10px; }
+    .progress-card .number { font-size: 2em; font-weight: 700; color: var(--accent-2); }
+    .progress-card .label { color: var(--muted); font-size: 0.9em; }
+    
+    /* Info Cards */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .info-card {
+      background: linear-gradient(145deg, #1e293b, #1a2744);
+      border-radius: 16px;
+      padding: 25px;
+      border: 1px solid var(--border);
+    }
+    .info-card h3 {
+      color: var(--accent);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .info-card ul { list-style: none; }
+    .info-card li {
+      padding: 8px 0;
+      padding-left: 25px;
+      position: relative;
+      color: var(--text);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .info-card li:last-child { border-bottom: none; }
+    .info-card li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--accent-2);
+    }
+    .info-card a { color: var(--accent); text-decoration: none; }
+    .info-card a:hover { text-decoration: underline; }
+    
+    /* Phase Tabs */
+    .phase-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .phase-tab {
+      padding: 12px 24px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--muted);
+    }
+    .phase-tab:hover, .phase-tab.active {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border-color: transparent;
+    }
+    
+    /* Day Cards */
+    .days-container { margin-bottom: 40px; }
+    .week-header {
+      background: linear-gradient(90deg, var(--accent), var(--purple));
+      padding: 15px 25px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    .day-card {
+      background: linear-gradient(145deg, #1e293b, #1a2744);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 15px;
+      overflow: hidden;
+    }
+    .day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 25px;
+      cursor: pointer;
+      background: linear-gradient(90deg, rgba(96,165,250,0.1), rgba(167,139,250,0.1));
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .day-header:hover { background: linear-gradient(90deg, rgba(96,165,250,0.2), rgba(167,139,250,0.2)); }
+    .day-title { font-size: 1.1em; font-weight: 600; }
+    .day-theme { color: var(--muted); font-size: 0.9em; margin-left: 15px; }
+    .day-progress {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .progress-bar {
+      width: 120px;
+      height: 8px;
+      background: var(--bg);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-2), #10b981);
+      transition: width 0.3s;
+    }
+    .progress-text { font-size: 0.85em; color: var(--muted); }
+    .toggle-icon {
+      font-size: 1.2em;
+      transition: transform 0.3s;
+    }
+    .day-card.open .toggle-icon { transform: rotate(180deg); }
+    
+    .day-content {
+      display: none;
+      padding: 25px;
+    }
+    .day-card.open .day-content { display: block; }
+    
+    /* Task Blocks */
+    .task-block {
+      background: linear-gradient(145deg, #0f172a, #1a2744);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-left: 4px solid var(--accent);
+    }
+    .task-block.listening { border-left-color: var(--pink); }
+    .task-block.speaking { border-left-color: var(--accent-2); }
+    .task-block.learning { border-left-color: var(--warning); }
+    .task-block.review { border-left-color: var(--accent); }
+    .task-block.practice { border-left-color: var(--purple); }
+    
+    .task-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+    .task-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .task-icon { font-size: 1.5em; }
+    .task-title { font-weight: 600; font-size: 1.05em; }
+    .task-duration {
+      background: rgba(255,255,255,0.1);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      color: var(--muted);
+    }
+    .task-checkbox {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--accent-2);
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .task-checkbox:hover { background: rgba(52, 211, 153, 0.2); }
+    .task-checkbox.checked { background: var(--accent-2); }
+    .task-checkbox.checked::after { content: '✓'; color: var(--bg); font-weight: bold; }
+    
+    .task-details { margin-top: 15px; }
+    .task-section {
+      margin-bottom: 15px;
+      padding: 15px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 10px;
+    }
+    .task-section-title {
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 0.9em;
+    }
+    .task-section p, .task-section li {
+      color: var(--text);
+      font-size: 0.95em;
+      line-height: 1.8;
+    }
+    .task-section ul { list-style: none; padding-left: 0; }
+    .task-section li { padding: 5px 0; padding-left: 20px; position: relative; }
+    .task-section li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+    
+    .resource-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .resource-link {
+      background: rgba(96, 165, 250, 0.15);
+      color: var(--accent);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.85em;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .resource-link:hover { background: rgba(96, 165, 250, 0.3); }
+    
+    .gpt-prompt {
+      background: #0a0f1a;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 10px;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 0.9em;
+      color: var(--text);
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+    .copy-btn {
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8em;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .copy-btn:hover { opacity: 0.9; }
+    
+    /* Sentence Cards */
+    .sentence-section { margin-top: 40px; }
+    .sentence-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 15px;
+    }
+    .sentence-card {
+      background: linear-gradient(145deg, #1e293b, #1a2744);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+    .sentence-category {
+      color: var(--accent);
+      font-size: 0.8em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+    .sentence-en { font-size: 1.1em; color: var(--text); margin-bottom: 8px; }
+    .sentence-cn { color: var(--muted); font-size: 0.95em; }
+    .sentence-usage {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 0.85em;
+      color: #64748b;
+    }
+    
+    .phase-overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .phase-card {
+      background: linear-gradient(145deg, #0f172a, #111827);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+    .phase-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+      gap: 8px;
+    }
+    .phase-card-title { font-weight: 600; }
+    .phase-card-phase { font-size: 0.85em; color: var(--muted); }
+    .phase-ratio-bar {
+      margin-top: 10px;
+      display: flex;
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #020617;
+    }
+    .phase-ratio-seg { height: 100%; }
+    .phase-ratio-seg.speaking { background: linear-gradient(90deg, #22c55e, #4ade80); }
+    .phase-ratio-seg.writing { background: linear-gradient(90deg, #60a5fa, #3b82f6); }
+    .phase-ratio-seg.meeting { background: linear-gradient(90deg, #a855f7, #6366f1); }
+    .phase-ratio-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 0.8em;
+      color: var(--muted);
+    }
+    .weekly-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 0.9em;
+    }
+    .weekly-table th, .weekly-table td {
+      border-bottom: 1px solid rgba(148,163,184,0.25);
+      padding: 8px 6px;
+      text-align: left;
+    }
+    .weekly-table th {
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 0.8em;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .day-mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 18px;
+      font-size: 0.9em;
+    }
+    .day-mini-table th, .day-mini-table td {
+      border-bottom: 1px solid rgba(148,163,184,0.2);
+      padding: 6px 4px;
+    }
+    .day-mini-table th {
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 0.8em;
+      text-transform: uppercase;
+    }
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.8em;
+    }
+    .pill-speaking { background: rgba(34,197,94,0.15); color: #bbf7d0; }
+    .pill-writing { background: rgba(96,165,250,0.15); color: #bfdbfe; }
+    .pill-meeting { background: rgba(168,85,247,0.15); color: #e9d5ff; }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: 0.9em;
+    }
+    
+    /* Sticky Actions */
+    .sticky-actions {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 100;
+    }
+    .sticky-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #3b82f6, #2563eb);
+      border: none;
+      color: white;
+      font-size: 1.2em;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+      transition: transform 0.2s;
+    }
+    .sticky-btn:hover { transform: scale(1.1); }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      header h1 { font-size: 1.8em; }
+      .info-grid { grid-template-columns: 1fr; }
+      .sentence-grid { grid-template-columns: 1fr; }
+      .day-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    }
+    
+    /* Print */
+    @media print {
+      body { background: white; color: black; }
+      .toolbar, .sticky-actions { display: none; }
+      .day-card { break-inside: avoid; }
+      .day-content { display: block !important; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🚀 90天英语突破计划</h1>
+    <p class="subtitle">专为 Fiverr 自由职业者设计 | 从开不了口到流利客户沟通</p>
+    <div class="methods">
+      <span>📖 透析法</span>
+      <span>🧠 费曼学习法</span>
+      <span>🔄 艾宾浩斯复习</span>
+      <span>🎯 场景化学习</span>
+      <span>🗣️ GPT语音对练</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <button class="btn primary" id="expandAll">📂 展开全部</button>
+      <button class="btn" id="collapseAll">📁 折叠全部</button>
+      <button class="btn" id="expandWeek">📅 展开本周</button>
+      <button class="btn success" id="exportProgress">💾 导出进度</button>
+      <button class="btn warning" id="clearProgress">🗑️ 清除进度</button>
+      <button class="btn" id="printPlan">🖨️ 打印计划</button>
+    </div>
+
+    <!-- Progress Overview -->
+    <div class="progress-section">
+      <div class="progress-card">
+        <div class="icon">📅</div>
+        <div class="number" id="totalDays">90</div>
+        <div class="label">总天数</div>
+      </div>
+      <div class="progress-card">
+        <div class="icon">✅</div>
+        <div class="number" id="completedDays">0</div>
+        <div class="label">已完成天数</div>
+      </div>
+      <div class="progress-card">
+        <div class="icon">⏰</div>
+        <div class="number">2h</div>
+        <div class="label">每日投入</div>
+      </div>
+      <div class="progress-card">
+        <div class="icon">🎯</div>
+        <div class="number" id="totalProgress">0%</div>
+        <div class="label">总体进度</div>
+      </div>
+    </div>
+</div>
+</body>
+</html>
+
+    <!-- Core Methods & Resources -->
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>📚 核心学习方法论</h3>
+        <ul>
+          <li><strong>透析法</strong>：精读→标注词块/句型→复述→场景改写，从输入到输出的完整链条</li>
+          <li><strong>费曼学习法</strong>：用简单语言讲解你学的内容，录制2-3分钟视频，以教促学</li>
+          <li><strong>艾宾浩斯复习</strong>：D+1、D+3、D+7、D+14、D+28 间隔复习，用 Anki 管理</li>
+          <li><strong>影子跟读法</strong>：延迟0.5秒跟读，模仿语调节奏，训练口腔肌肉记忆</li>
+          <li><strong>场景化学习</strong>：不背孤立单词，只学 Fiverr 工作中会用到的句子</li>
+        </ul>
+      </div>
+      
+      <div class="info-card">
+        <h3>🔧 核心工具（全部免费/有免费版）</h3>
+        <ul>
+          <li><a href="https://chat.openai.com" target="_blank">ChatGPT App</a> - 语音对话练习，24小时可用</li>
+          <li><a href="https://apps.ankiweb.net/" target="_blank">Anki</a> - 间隔重复记忆卡片</li>
+          <li><a href="https://elsaspeak.com/" target="_blank">ELSA Speak</a> - AI发音纠正</li>
+          <li><a href="https://youglish.com/" target="_blank">YouGlish</a> - 搜索任何词，看真人怎么说</li>
+          <li><a href="https://www.grammarly.com/" target="_blank">Grammarly</a> - 语法检查</li>
+          <li><a href="https://www.deepl.com/" target="_blank">DeepL</a> - 高质量翻译对照</li>
+        </ul>
+      </div>
+      
+      <div class="info-card">
+        <h3>🎧 听力材料（按难度排序）</h3>
+        <ul>
+          <li><a href="https://www.bbc.co.uk/learningenglish/english/features/english-at-work" target="_blank">BBC English at Work</a> - 职场场景，每集3-5分钟</li>
+          <li><a href="https://www.bbc.co.uk/learningenglish/english/features/6-minute-english" target="_blank">BBC 6 Minute English</a> - 话题广泛，有文稿</li>
+          <li><a href="https://www.businessenglishpod.com/" target="_blank">Business English Pod</a> - 商务英语专项</li>
+          <li><a href="https://learningenglish.voanews.com/" target="_blank">VOA Learning English</a> - 慢速新闻</li>
+          <li><a href="https://www.youtube.com/@bbclearningenglish" target="_blank">BBC Learning English (YouTube)</a></li>
+        </ul>
+      </div>
+      
+      <div class="info-card">
+        <h3>📖 参考书籍</h3>
+        <ul>
+          <li><strong>《把你的英语用起来》</strong> - 透析法详解</li>
+          <li><strong>《人人都能用英语》李笑来</strong> - 方法论与心态</li>
+          <li><a href="https://www.cambridge.org/gb/cambridgeenglish/catalog/grammar-vocabulary-and-pronunciation/english-grammar-use-5th-edition" target="_blank">English Grammar in Use</a> - 语法练习经典</li>
+          <li><a href="https://www.oxfordlearnersdictionaries.com/definition/english/practical-english-usage" target="_blank">Practical English Usage</a> - 用法参考</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Daily Schedule Overview -->
+    <div class="info-card" style="margin-bottom: 30px;">
+      <h3>⏰ 每日时间分配（共2小时）</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+        <div style="background: rgba(244,114,182,0.1); padding: 15px; border-radius: 10px; border-left: 3px solid #f472b6;">
+          <strong style="color: #f472b6;">🎧 听力输入</strong><br>
+          <span style="color: var(--muted);">30分钟 | 精听+跟读</span>
+        </div>
+        <div style="background: rgba(52,211,153,0.1); padding: 15px; border-radius: 10px; border-left: 3px solid #34d399;">
+          <strong style="color: #34d399;">🗣️ 口语输出</strong><br>
+          <span style="color: var(--muted);">30分钟 | GPT对话</span>
+        </div>
+        <div style="background: rgba(251,191,36,0.1); padding: 15px; border-radius: 10px; border-left: 3px solid #fbbf24;">
+          <strong style="color: #fbbf24;">📚 场景学习</strong><br>
+          <span style="color: var(--muted);">30分钟 | 句型积累</span>
+        </div>
+        <div style="background: rgba(96,165,250,0.1); padding: 15px; border-radius: 10px; border-left: 3px solid #60a5fa;">
+          <strong style="color: #60a5fa;">🔁 复习巩固</strong><br>
+          <span style="color: var(--muted);">30分钟 | Anki+录音</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase Overview Charts -->
+    <div class="info-card" style="margin-bottom: 30px;">
+      <h3>📊 90天三阶段路线图（语音通话优先）</h3>
+      <p style="color: var(--muted); font-size: 0.9em; margin-bottom: 10px;">
+        整体节奏：
+        第1阶段先打开耳朵和嘴巴（Day 1-30），
+        第2阶段稳住持续对话和文字沟通（Day 31-60），
+        第3阶段专攻语音通话和会议场景（Day 61-90）。
+      </p>
+      <div class="phase-overview-grid">
+        <div class="phase-card">
+          <div class="phase-card-header">
+            <div class="phase-card-title">阶段一：基础重建</div>
+            <div class="phase-card-phase">Day 1-30｜目标：听力10%→40%，敢开口</div>
+          </div>
+          <p style="color: var(--muted); font-size: 0.9em;">慢速材料+影子跟读为主，建立“声音-意义”连接，配合简单文字沟通。</p>
+          <div class="phase-ratio-bar">
+            <div class="phase-ratio-seg speaking" style="width: 60%;"></div>
+            <div class="phase-ratio-seg writing" style="width: 30%;"></div>
+            <div class="phase-ratio-seg meeting" style="width: 10%;"></div>
+          </div>
+          <div class="phase-ratio-labels">
+            <span>🗣️ 语音/口语 60%</span>
+            <span>✍️ 文字 30%</span>
+            <span>📹 会议 10%</span>
+          </div>
+        </div>
+        <div class="phase-card">
+          <div class="phase-card-header">
+            <div class="phase-card-title">阶段二：能力提升</div>
+            <div class="phase-card-phase">Day 31-60｜目标：听力40%→60%，10分钟对话</div>
+          </div>
+          <p style="color: var(--muted); font-size: 0.9em;">增加真实客户场景、Fiverr 消息与邮件写作，语音对话时间拉长到 10 分钟以上。</p>
+          <div class="phase-ratio-bar">
+            <div class="phase-ratio-seg speaking" style="width: 50%;"></div>
+            <div class="phase-ratio-seg writing" style="width: 30%;"></div>
+            <div class="phase-ratio-seg meeting" style="width: 20%;"></div>
+          </div>
+          <div class="phase-ratio-labels">
+            <span>🗣️ 语音/口语 50%</span>
+            <span>✍️ 文字 30%</span>
+            <span>📹 会议 20%</span>
+          </div>
+        </div>
+        <div class="phase-card">
+          <div class="phase-card-header">
+            <div class="phase-card-title">阶段三：实战巩固</div>
+            <div class="phase-card-phase">Day 61-90｜目标：听力60%→70%+，能参加工作会议</div>
+          </div>
+          <p style="color: var(--muted); font-size: 0.9em;">集中在语音通话与视频会议模拟，上麦讲清楚需求、进度、问题和下一步。</p>
+          <div class="phase-ratio-bar">
+            <div class="phase-ratio-seg speaking" style="width: 40%;"></div>
+            <div class="phase-ratio-seg writing" style="width: 25%;"></div>
+            <div class="phase-ratio-seg meeting" style="width: 35%;"></div>
+          </div>
+          <div class="phase-ratio-labels">
+            <span>🗣️ 语音/口语 40%</span>
+            <span>✍️ 文字 25%</span>
+            <span>📹 会议 35%</span>
+          </div>
+        </div>
+      </div>
+      <table class="weekly-table">
+        <thead>
+          <tr>
+            <th>周次</th>
+            <th>主题</th>
+            <th>Day 范围</th>
+            <th>本周重点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>第1周</td><td>第1周：打开耳朵和嘴巴</td><td>Day 1-7</td><td>慢速听力 + 影子跟读，习惯每天 2 小时节奏</td></tr>
+          <tr><td>第2周</td><td>第2周：建立基础句型库</td><td>Day 8-14</td><td>Fiverr 高频句型 + Anki 建库</td></tr>
+          <tr><td>第3周</td><td>第3周：强化听说连接</td><td>Day 15-21</td><td>听完→复述→语音复盘，巩固“听得懂就说得出”</td></tr>
+          <tr><td>第4周</td><td>第4周：场景化输出</td><td>Day 22-28</td><td>围绕报价、需求确认、交付解释做完整对话</td></tr>
+          <tr><td>第5周</td><td>第5周：扩大输入量</td><td>Day 29-35</td><td>加入播客/YouTube，提升语速适应能力</td></tr>
+          <tr><td>第6周</td><td>第6周：复杂场景练习</td><td>Day 36-42</td><td>投诉、变更需求、模糊需求等高压场景</td></tr>
+          <tr><td>第7周</td><td>第7周：真人对话准备</td><td>Day 43-49</td><td>固定 10 分钟语音对练，整理自我介绍与项目故事</td></tr>
+          <tr><td>第8周</td><td>第8周：模拟工作会议</td><td>Day 50-56</td><td>30 分钟会议流程：开场→议程→讨论→总结</td></tr>
+          <tr><td>第9周</td><td>第9周：实战演练</td><td>Day 57-63</td><td>至少安排 1-2 次真实语音通话或公开讨论</td></tr>
+          <tr><td>第10周</td><td>第10周：查缺补漏</td><td>Day 64-70</td><td>根据录音与笔记回看，专攻高频错误与听力盲点</td></tr>
+          <tr><td>第11周</td><td>第11周：流利度提升</td><td>Day 71-77</td><td>控制语速与停顿，练习长句和连接词</td></tr>
+          <tr><td>第12周</td><td>第12周：自信表达</td><td>Day 78-84</td><td>在不完美的英语下保持顺畅对话和清晰态度</td></tr>
+          <tr><td>第13周</td><td>第13周：巩固与总结</td><td>Day 85-90</td><td>复盘 90 天全部材料，形成个人英文沟通 playbook</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Phase Tabs -->
+    <div class="phase-tabs">
+      <div class="phase-tab active" data-phase="1">第一阶段：基础重建（Day 1-30）</div>
+      <div class="phase-tab" data-phase="2">第二阶段：能力提升（Day 31-60）</div>
+      <div class="phase-tab" data-phase="3">第三阶段：实战巩固（Day 61-90）</div>
+    </div>
+
+    <!-- Days Container -->
+    <div class="days-container" id="daysContainer"></div>
+
+    <!-- 50 Essential Sentences -->
+    <section class="sentence-section">
+      <h2 style="color: var(--accent); margin-bottom: 20px; font-size: 1.5em;">💬 Fiverr 客户沟通 50 句必背句型</h2>
+      <p style="color: var(--muted); margin-bottom: 25px;">每天早上花 10 分钟大声朗读，30 天后脱口而出。按艾宾浩斯复习：D+1、D+3、D+7、D+14、D+28。</p>
+      
+      <div class="sentence-grid" id="sentenceGrid">
+        <!-- Will be populated by JS -->
+      </div>
+    </section>
+
+    <!-- GPT Prompts Section -->
+    <section style="margin-top: 40px;">
+      <h2 style="color: var(--accent); margin-bottom: 20px; font-size: 1.5em;">🤖 ChatGPT 语音练习指令库</h2>
+      <p style="color: var(--muted); margin-bottom: 25px;">直接复制到 ChatGPT App，开启语音模式练习。每天选 1-2 个场景。</p>
+      
+      <div id="gptPrompts"></div>
+    </section>
+  </div>
+
+  <!-- Sticky Actions -->
+  <div class="sticky-actions">
+    <button class="sticky-btn" id="scrollTop" title="回到顶部">⬆️</button>
+    <button class="sticky-btn" id="jumpToday" title="跳到今天">📅</button>
+  </div>
+
+  <footer>
+    <p>📅 90天英语突破计划 | 专为 Fiverr 自由职业者设计</p>
+    <p style="margin-top: 10px; color: var(--accent-2);">🎯 记住：开口说比说得完美更重要！</p>
+  </footer>
+
+  <script>
+    // ==================== DATA ====================
+    
+    // 50 Essential Sentences
+    const sentences = [
+      // Opening (1-5)
+      { cat: "🤝 开场问候", en: "Hi, thanks for reaching out!", cn: "嗨，感谢你联系我！", usage: "收到客户第一条消息时" },
+      { cat: "🤝 开场问候", en: "Thanks for the details – that really helps.", cn: "感谢提供这些细节，这很有帮助。", usage: "客户发来项目信息后" },
+      { cat: "🤝 开场问候", en: "I'd be happy to help with this.", cn: "我很乐意帮忙处理这个。", usage: "表达愿意接单" },
+      { cat: "🤝 开场问候", en: "This is exactly the kind of work I do.", cn: "这正是我擅长的工作类型。", usage: "强调专业匹配度" },
+      { cat: "🤝 开场问候", en: "Let me take a look and get back to you.", cn: "让我看一下，稍后回复你。", usage: "需要时间评估时" },
+      
+      // Questions (6-15)
+      { cat: "❓ 确认需求", en: "Could you tell me more about the issue?", cn: "你能告诉我更多关于这个问题的情况吗？", usage: "需要更多信息时" },
+      { cat: "❓ 确认需求", en: "What's the expected outcome you're looking for?", cn: "你期望的结果是什么？", usage: "了解客户目标" },
+      { cat: "❓ 确认需求", en: "Do you have a deadline in mind?", cn: "你有截止日期吗？", usage: "确认时间要求" },
+      { cat: "❓ 确认需求", en: "Can you share the error message or screenshot?", cn: "你能分享错误信息或截图吗？", usage: "需要技术细节时" },
+      { cat: "❓ 确认需求", en: "What tech stack are you using?", cn: "你用的是什么技术栈？", usage: "了解技术环境" },
+      { cat: "❓ 确认需求", en: "Is this for a production site or development?", cn: "这是生产环境还是开发环境？", usage: "评估风险级别" },
+      { cat: "❓ 确认需求", en: "How would you like me to access the code?", cn: "你希望我如何访问代码？", usage: "确认代码访问方式" },
+      { cat: "❓ 确认需求", en: "Is there anything else I should know?", cn: "还有什么我应该知道的吗？", usage: "确保没有遗漏" },
+      { cat: "❓ 确认需求", en: "When did this issue first appear?", cn: "这个问题是什么时候开始出现的？", usage: "了解问题历史" },
+      { cat: "❓ 确认需求", en: "Have you tried anything to fix it so far?", cn: "你之前尝试过什么方法修复吗？", usage: "了解已尝试的方案" },
+      
+      // Pricing (16-25)
+      { cat: "💰 报价", en: "For this scope, I can offer $60.", cn: "对于这个范围，我可以报价 60 美元。", usage: "给出具体报价" },
+      { cat: "💰 报价", en: "I'd recommend the Standard package for this.", cn: "我建议你选择标准套餐。", usage: "推荐合适的套餐" },
+      { cat: "💰 报价", en: "If it turns out to be bigger, I'll let you know first.", cn: "如果工作量比预期大，我会先告诉你。", usage: "设定预期" },
+      { cat: "💰 报价", en: "The price includes one round of revisions.", cn: "价格包含一次修改。", usage: "说明服务内容" },
+      { cat: "💰 报价", en: "I can send you a custom offer if you'd like.", cn: "如果你愿意，我可以给你发一个定制报价。", usage: "引导客户下单" },
+      { cat: "💰 报价", en: "We can start with a small task to test the fit.", cn: "我们可以先从一个小任务开始，看看是否合适。", usage: "降低决策门槛" },
+      { cat: "💰 报价", en: "That's outside the scope of this package.", cn: "这超出了这个套餐的范围。", usage: "礼貌拒绝额外要求" },
+      { cat: "💰 报价", en: "I can add that for an extra $20.", cn: "我可以加 20 美元来做这个。", usage: "追加服务报价" },
+      { cat: "💰 报价", en: "Let me know if the budget works for you.", cn: "请告诉我这个预算是否可以接受。", usage: "确认客户预算" },
+      { cat: "💰 报价", en: "I'm flexible on pricing for the right project.", cn: "对于合适的项目，我在价格上可以灵活一些。", usage: "表示愿意协商" },
+      
+      // Explaining (26-35)
+      { cat: "🔧 解释方案", en: "Here's how I'd approach this...", cn: "我会这样处理这个问题...", usage: "开始解释方案" },
+      { cat: "🔧 解释方案", en: "The first step would be to...", cn: "第一步是...", usage: "分步骤说明" },
+      { cat: "🔧 解释方案", en: "I'll keep you updated as I go.", cn: "我会随时向你更新进度。", usage: "承诺沟通" },
+      { cat: "🔧 解释方案", en: "In simple terms, the issue is...", cn: "简单来说，问题是...", usage: "用简单语言解释" },
+      { cat: "🔧 解释方案", en: "Once I fix this, you should see...", cn: "修复后，你应该会看到...", usage: "描述预期结果" },
+      { cat: "🔧 解释方案", en: "I found the root cause of the problem.", cn: "我找到了问题的根本原因。", usage: "报告诊断结果" },
+      { cat: "🔧 解释方案", en: "This is a common issue with React apps.", cn: "这是 React 应用的常见问题。", usage: "让客户安心" },
+      { cat: "🔧 解释方案", en: "I'll write clean code with comments.", cn: "我会写干净的代码并加注释。", usage: "强调代码质量" },
+      { cat: "🔧 解释方案", en: "I'll test it thoroughly before delivery.", cn: "交付前我会彻底测试。", usage: "承诺质量" },
+      { cat: "🔧 解释方案", en: "Let me know if you have any questions.", cn: "如果有任何问题请告诉我。", usage: "邀请客户提问" },
+      
+      // Timeline (36-40)
+      { cat: "⏰ 时间安排", en: "I can have this done in 2 days.", cn: "我可以在2天内完成。", usage: "承诺交付时间" },
+      { cat: "⏰ 时间安排", en: "I'll send you a progress update tomorrow.", cn: "我明天会给你发进度更新。", usage: "设定沟通节点" },
+      { cat: "⏰ 时间安排", en: "I can start as soon as you place the order.", cn: "你下单后我就可以开始。", usage: "表示准备就绪" },
+      { cat: "⏰ 时间安排", en: "I'm based in UTC+8, great for overnight work.", cn: "我在 UTC+8 时区，适合通宵工作。", usage: "强调时区优势" },
+      { cat: "⏰ 时间安排", en: "I need a bit more time for this one.", cn: "这个我需要多一点时间。", usage: "诚实沟通时间需求" },
+      
+      // Follow-up (41-45)
+      { cat: "📩 跟进", en: "Just checking in – any questions so far?", cn: "跟进一下，目前有什么问题吗？", usage: "温和跟进" },
+      { cat: "📩 跟进", en: "Let me know when you're ready to proceed.", cn: "准备好了请告诉我。", usage: "等待客户决定" },
+      { cat: "📩 跟进", en: "Feel free to reach out if anything comes up.", cn: "有任何问题随时联系我。", usage: "保持开放沟通" },
+      { cat: "📩 跟进", en: "I'm here if you need any clarification.", cn: "如果需要任何说明，我随时在。", usage: "表示随时可用" },
+      { cat: "📩 跟进", en: "No rush – take your time to decide.", cn: "不着急，慢慢考虑。", usage: "减轻客户压力" },
+      
+      // Closing (46-50)
+      { cat: "✅ 结束", en: "Looking forward to working with you!", cn: "期待与你合作！", usage: "积极结束对话" },
+      { cat: "✅ 结束", en: "Thanks again, and talk soon.", cn: "再次感谢，回头聊。", usage: "友好告别" },
+      { cat: "✅ 结束", en: "I've delivered the work – please review.", cn: "我已经交付了，请查看。", usage: "交付通知" },
+      { cat: "✅ 结束", en: "Let me know if you need any adjustments.", cn: "如果需要任何调整请告诉我。", usage: "交付后跟进" },
+      { cat: "✅ 结束", en: "It was great working with you!", cn: "很高兴与你合作！", usage: "项目完成后" }
+    ];
+
+    // GPT Prompts
+    const gptPrompts = [
+      {
+        title: "🎯 场景 1：自我介绍",
+        prompt: `Let's practice English conversation. I'm a freelance web developer learning to communicate with clients. Please ask me to introduce myself, then give me feedback on my grammar and pronunciation. Speak slowly and use simple words. After I answer, ask follow-up questions about my work experience and skills.`,
+        tips: ["练习时长：10-15 分钟", "重点：流利度、自信表达"]
+      },
+      {
+        title: "🎯 场景 2：报价练习",
+        prompt: `You are a potential client on Fiverr. You want to hire me to fix a React bug in your website. Ask me about my pricing, what's included in each package, and how long it will take. I'll practice explaining my services and giving you a quote. Please correct my English and suggest more professional ways to say things.`,
+        tips: ["练习时长：15 分钟", "重点：清晰报价、解释套餐差异"]
+      },
+      {
+        title: "🎯 场景 3：需求确认",
+        prompt: `You are a client who wants to hire me but hasn't given me enough details about the project. Give me vague descriptions like "my website is broken" or "something is wrong with the form". I'll practice asking clarifying questions to understand what you really need. Correct my English and tell me if my questions are clear.`,
+        tips: ["练习时长：15 分钟", "重点：提问技巧、获取关键信息"]
+      },
+      {
+        title: "🎯 场景 4：解释技术问题（给非技术客户）",
+        prompt: `You are a non-technical client. You hired me to fix a bug in your React website. Ask me to explain what the problem was and how I fixed it. I need to practice explaining technical work in simple, plain English that anyone can understand. Tell me if my explanation is too technical or confusing.`,
+        tips: ["练习时长：15 分钟", "重点：简化技术语言、类比说明"]
+      },
+      {
+        title: "🎯 场景 5：处理着急的客户",
+        prompt: `You are an urgent client. Your website is down and you need it fixed immediately. You're stressed and asking me to work faster. I'll practice staying calm, setting realistic expectations, and negotiating timelines professionally. Give me feedback on my tone and word choices.`,
+        tips: ["练习时长：15 分钟", "重点：保持冷静、专业应对压力"]
+      },
+      {
+        title: "🎯 场景 6：处理预算有限的客户",
+        prompt: `You are a client with a limited budget. You want me to do a lot of work but can only pay $30. I'll practice politely explaining my pricing, offering alternatives like smaller scope or phased work, and maintaining my value without being rude. Correct my English and suggest diplomatic phrases.`,
+        tips: ["练习时长：15 分钟", "重点：礼貌拒绝、提供替代方案"]
+      },
+      {
+        title: "🎯 场景 7：完整客户对话模拟",
+        prompt: `Let's do a complete Fiverr client conversation roleplay from start to finish. You are a client who found my React bug fixing gig. Start by describing your problem. I'll respond as a professional freelancer - greeting you, asking questions, explaining my approach, giving a quote, and closing the deal. After we finish the entire conversation, give me detailed feedback on my English, professionalism, and areas to improve.`,
+        tips: ["练习时长：20-30 分钟", "重点：完整流程、综合能力"]
+      },
+      {
+        title: "🎯 场景 8：语音会议练习",
+        prompt: `Let's simulate a video call with a client. You are a client who wants to discuss a project before hiring me. Ask me questions about my experience, how I work, my availability, and my process. I'll practice speaking clearly and professionally as if we're on a real Zoom call. Give me feedback on my speaking pace, clarity, and confidence.`,
+        tips: ["练习时长：20 分钟", "重点：语速控制、清晰表达"]
+      },
+      {
+        title: "🎯 场景 9：处理客户投诉",
+        prompt: `You are an unhappy client. The work I delivered doesn't match what you expected. You're frustrated and want me to fix it or give a refund. I'll practice handling complaints professionally - apologizing appropriately, understanding the issue, and proposing solutions. Help me use diplomatic language.`,
+        tips: ["练习时长：15 分钟", "重点：道歉技巧、解决问题"]
+      },
+      {
+        title: "🎯 场景 10：拒绝不合适的项目",
+        prompt: `You are a client asking me to do work that's outside my expertise or against Fiverr rules (like working outside the platform). I'll practice politely declining while maintaining a good relationship. Help me find professional ways to say no without being rude or burning bridges.`,
+        tips: ["练习时长：10 分钟", "重点：礼貌拒绝、保持专业"]
+      }
+    ];
+
+    // Day themes and content
+    const weekThemes = {
+      1: "第1周：打开耳朵和嘴巴",
+      2: "第2周：建立基础句型库",
+      3: "第3周：强化听说连接",
+      4: "第4周：场景化输出",
+      5: "第5周：扩大输入量",
+      6: "第6周：复杂场景练习",
+      7: "第7周：真人对话准备",
+      8: "第8周：模拟工作会议",
+      9: "第9周：实战演练",
+      10: "第10周：查缺补漏",
+      11: "第11周：流利度提升",
+      12: "第12周：自信表达",
+      13: "第13周：巩固与总结"
+    };
+
+    const phaseGoals = {
+      1: { goal: "听力 10%→40%，能说完整句子", focus: "精听+跟读+GPT对话" },
+      2: { goal: "听力 40%→60%，能进行10分钟对话", focus: "扩大输入+真人对话" },
+      3: { goal: "听力 60%→70%+，能参加工作会议", focus: "实战演练+自信表达" }
+    };
+
+    // Listening materials by day
+    const listeningMaterials = [
+      { name: "BBC English at Work Ep.1", url: "https://www.bbc.co.uk/learningenglish/english/features/english-at-work/ep-1" },
+      { name: "BBC English at Work Ep.2", url: "https://www.bbc.co.uk/learningenglish/english/features/english-at-work/ep-2" },
+      { name: "BBC English at Work Ep.3", url: "https://www.bbc.co.uk/learningenglish/english/features/english-at-work/ep-3" },
+      { name: "BBC English at Work Ep.4", url: "https://www.bbc.co.uk/learningenglish/english/features/english-at-work/ep-4" },
+      { name: "BBC English at Work Ep.5", url: "https://www.bbc.co.uk/learningenglish/english/features/english-at-work/ep-5" },
+      { name: "BBC English at Work Ep.6", url: "https://www.bbc.co.uk/learningenglish/english/features/english-at-work/ep-6" },
+      { name: "BBC English at Work Ep.7", url: "https://www.bbc.co.uk/learningenglish/english/features/english-at-work/ep-7" },
+      // ... continues for 90 days, cycling through materials
+    ];
+
+    // Daily sentence focus (5 sentences per day, cycling through 50)
+    const getDailySentences = (day) => {
+      const startIdx = ((day - 1) * 5) % 50;
+      return sentences.slice(startIdx, startIdx + 5).concat(
+        startIdx + 5 > 50 ? sentences.slice(0, (startIdx + 5) - 50) : []
+      ).slice(0, 5);
+    };
+
+    // GPT prompt for the day
+    const getDailyGptPrompt = (day) => {
+      return gptPrompts[(day - 1) % gptPrompts.length];
+    };
+
+    // Review schedule (Ebbinghaus)
+    const getReviewDays = (day) => {
+      const reviews = [];
+      if (day > 1) reviews.push({ day: day - 1, label: "D+1 复习昨天" });
+      if (day > 3) reviews.push({ day: day - 3, label: "D+3 复习3天前" });
+      if (day > 7) reviews.push({ day: day - 7, label: "D+7 复习一周前" });
+      if (day > 14) reviews.push({ day: day - 14, label: "D+14 复习两周前" });
+      if (day > 28) reviews.push({ day: day - 28, label: "D+28 复习四周前" });
+      return reviews;
+    };
+
+    // ==================== STORAGE ====================
+    const STORAGE_KEY = 'english-90d-progress';
+    
+    const loadProgress = () => {
+      const data = localStorage.getItem(STORAGE_KEY);
+      return data ? JSON.parse(data) : {};
+    };
+    
+    const saveProgress = (progress) => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      updateProgressDisplay();
+    };
+    
+    const getTaskKey = (day, taskType) => `d${day}-${taskType}`;
+    
+    const isTaskCompleted = (day, taskType) => {
+      const progress = loadProgress();
+      return progress[getTaskKey(day, taskType)] === true;
+    };
+    
+    const toggleTask = (day, taskType) => {
+      const progress = loadProgress();
+      const key = getTaskKey(day, taskType);
+      progress[key] = !progress[key];
+      saveProgress(progress);
+      return progress[key];
+    };
+
+    // ==================== RENDER ====================
+    
+    const renderSentences = () => {
+      const grid = document.getElementById('sentenceGrid');
+      grid.innerHTML = sentences.map((s, i) => `
+        <div class="sentence-card">
+          <div class="sentence-category">${s.cat} (${i + 1})</div>
+          <div class="sentence-en">${s.en}</div>
+          <div class="sentence-cn">${s.cn}</div>
+          <div class="sentence-usage"><strong>使用场景：</strong>${s.usage}</div>
+        </div>
+      `).join('');
+    };
+
+    const renderGptPrompts = () => {
+      const container = document.getElementById('gptPrompts');
+      container.innerHTML = gptPrompts.map((p, i) => `
+        <div class="info-card" style="margin-bottom: 20px;">
+          <h3>${p.title}</h3>
+          <div class="gpt-prompt">${p.prompt}</div>
+          <button class="copy-btn" onclick="copyPrompt(${i})">📋 复制指令</button>
+          <div style="margin-top: 15px;">
+            ${p.tips.map(t => `<span style="display: inline-block; background: rgba(96,165,250,0.1); padding: 4px 10px; border-radius: 15px; font-size: 0.85em; margin-right: 8px; color: var(--accent);">💡 ${t}</span>`).join('')}
+          </div>
+        </div>
+      `).join('');
+    };
+
+    const renderDayCard = (day) => {
+      const phase = day <= 30 ? 1 : (day <= 60 ? 2 : 3);
+      const week = Math.ceil(day / 7);
+      const weekTheme = weekThemes[week] || `第${week}周`;
+      const dailySentences = getDailySentences(day);
+      const dailyPrompt = getDailyGptPrompt(day);
+      const reviews = getReviewDays(day);
+      const listeningMaterial = listeningMaterials[(day - 1) % listeningMaterials.length] || listeningMaterials[0];
+      const phaseSpeakingNote = phase === 1
+        ? '建立语音习惯，敢用英语完整说出一句话；可以用短句+停顿，不追求完美。'
+        : (phase === 2
+          ? '把语音对话时长扩展到 10 分钟以上，学会解释方案、报价与时间安排。'
+          : '尽量用会议方式说话：先说结论，再补充细节，练习汇报进度和下一步。');
+      const phaseMeetingNote = phase === 1
+        ? '本阶段会议只做轻量想象练习：自我介绍、打招呼、简单说明你是做什么的。'
+        : (phase === 2
+          ? '每周至少安排 1 次 10 分钟语音/Zoom 对话，围绕需求澄清和报价进行角色扮演。'
+          : '争取每周有 1–2 次完整会议 role-play 或真实通话，练习开场、控场、总结。');
+      
+      const tasks = ['listening', 'speaking', 'learning', 'review'];
+      const completedTasks = tasks.filter(t => isTaskCompleted(day, t)).length;
+      const progressPercent = Math.round((completedTasks / tasks.length) * 100);
+
+      return `
+        <div class="day-card" id="day-${day}" data-phase="${phase}">
+          <div class="day-header" onclick="toggleDay(${day})">
+            <div>
+              <span class="day-title">📅 Day ${day}</span>
+              <span class="day-theme">${weekTheme}</span>
+            </div>
+            <div class="day-progress">
+              <div class="progress-bar">
+                <div class="progress-bar-fill" style="width: ${progressPercent}%"></div>
+              </div>
+              <span class="progress-text">${completedTasks}/${tasks.length}</span>
+              <span class="toggle-icon">▼</span>
+            </div>
+          </div>
+          <div class="day-content">
+            <div style="margin-bottom: 18px;">
+              <table class="day-mini-table">
+                <thead>
+                  <tr>
+                    <th>模块</th>
+                    <th>时长</th>
+                    <th>重点技能</th>
+                    <th>今天怎么做</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>🎧 听力输入</td>
+                    <td>30 分钟</td>
+                    <td><span class="pill pill-speaking">语音输入</span></td>
+                    <td>选用今日听力材料，按「盲听→对照→跟读」三步走，标记听不清的地方并记录 3 个新词/搭配。</td>
+                  </tr>
+                  <tr>
+                    <td>🗣️ 口语输出</td>
+                    <td>30 分钟</td>
+                    <td><span class="pill pill-speaking">语音通话（优先）</span></td>
+                    <td>${phaseSpeakingNote}</td>
+                  </tr>
+                  <tr>
+                    <td>📚 场景学习</td>
+                    <td>30 分钟</td>
+                    <td><span class="pill pill-writing">文字沟通</span></td>
+                    <td>围绕 Fiverr 客户沟通句型：熟悉 5 句必背句型，用它们改写成「聊天消息 / 短邮件 / Proposal」中的一句。</td>
+                  </tr>
+                  <tr>
+                    <td>🔁 复习巩固</td>
+                    <td>30 分钟</td>
+                    <td><span class="pill pill-writing">巩固 + 复盘</span></td>
+                    <td>用 Anki 做艾宾浩斯复习 + 回听录音 + 写英文小结，各找 1–2 个错误进行改写和再朗读。</td>
+                  </tr>
+                  <tr>
+                    <td>📹 会议意识</td>
+                    <td>—</td>
+                    <td><span class="pill pill-meeting">会议场景</span></td>
+                    <td>${phaseMeetingNote}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            ${reviews.length > 0 ? `
+              <div class="task-block review" style="border-left-color: #a78bfa;">
+                <div class="task-header">
+                  <div class="task-title-wrap">
+                    <span class="task-icon">🔄</span>
+                    <span class="task-title">艾宾浩斯复习提醒</span>
+                  </div>
+                </div>
+                <div class="task-details">
+                  <div class="task-section">
+                    <p>今天需要复习以下内容（间隔重复）：</p>
+                    <ul>
+                      ${reviews.map(r => `<li>${r.label}：Day ${r.day} 的句型和听力材料</li>`).join('')}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ` : ''}
+            
+            <!-- Task 1: Listening -->
+            <div class="task-block listening">
+              <div class="task-header">
+                <div class="task-title-wrap">
+                  <span class="task-icon">🎧</span>
+                  <span class="task-title">听力输入：精听+跟读</span>
+                  <span class="task-duration">30分钟</span>
+                </div>
+                <div class="task-checkbox ${isTaskCompleted(day, 'listening') ? 'checked' : ''}" 
+                     onclick="event.stopPropagation(); handleTaskClick(${day}, 'listening', this)"></div>
+              </div>
+              <div class="task-details">
+                <div class="task-section">
+                  <div class="task-section-title">📚 今日材料</div>
+                  <div class="resource-links">
+                    <a href="${listeningMaterial.url}" target="_blank" class="resource-link">${listeningMaterial.name}</a>
+                    <a href="https://youglish.com/" target="_blank" class="resource-link">YouGlish 跟读</a>
+                  </div>
+                </div>
+                <div class="task-section">
+                  <div class="task-section-title">📋 三遍精听法</div>
+                  <ul>
+                    <li><strong>第一遍（5分钟）盲听：</strong>不看文字，只听音频，尽量抓关键词，记下听不懂的时间点</li>
+                    <li><strong>第二遍（10分钟）对照：</strong>打开字幕/文稿，边看边听，标记：🔴生词 🟡认识但没听出 🟢连读弱读</li>
+                    <li><strong>第三遍（15分钟）跟读：</strong>播一句暂停一句，模仿语调节奏，录下自己的声音对比原音</li>
+                  </ul>
+                </div>
+                <div class="task-section">
+                  <div class="task-section-title">✅ 完成标准</div>
+                  <p>• 记录≥3个新词/搭配 • 跟读录音1段 • 能复述材料大意</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Task 2: Speaking -->
+            <div class="task-block speaking">
+              <div class="task-header">
+                <div class="task-title-wrap">
+                  <span class="task-icon">🗣️</span>
+                  <span class="task-title">口语输出：GPT语音对话</span>
+                  <span class="task-duration">30分钟</span>
+                </div>
+                <div class="task-checkbox ${isTaskCompleted(day, 'speaking') ? 'checked' : ''}" 
+                     onclick="event.stopPropagation(); handleTaskClick(${day}, 'speaking', this)"></div>
+              </div>
+              <div class="task-details">
+                <div class="task-section">
+                  <div class="task-section-title">🎯 今日场景：${dailyPrompt.title}</div>
+                  <div class="gpt-prompt">${dailyPrompt.prompt}</div>
+                  <button class="copy-btn" onclick="navigator.clipboard.writeText(\`${dailyPrompt.prompt.replace(/`/g, '\\`')}\`).then(() => this.textContent = '✅ 已复制').catch(() => {})">📋 复制到 ChatGPT</button>
+                </div>
+                <div class="task-section">
+                  <div class="task-section-title">📋 练习步骤</div>
+                  <ul>
+                    <li>打开 ChatGPT App，开启语音模式</li>
+                    <li>复制上面的指令发送给 GPT</li>
+                    <li>用语音和 GPT 对话，不要打字</li>
+                    <li>让 GPT 纠正你的错误，记录下来</li>
+                  </ul>
+                </div>
+                <div class="task-section">
+                  <div class="task-section-title">✅ 完成标准</div>
+                  <p>• 语音对话≥20分钟 • 记录≥3个被纠正的表达 • 尝试使用今日句型</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Task 3: Learning -->
+            <div class="task-block learning">
+              <div class="task-header">
+                <div class="task-title-wrap">
+                  <span class="task-icon">📚</span>
+                  <span class="task-title">场景学习：句型积累</span>
+                  <span class="task-duration">30分钟</span>
+                </div>
+                <div class="task-checkbox ${isTaskCompleted(day, 'learning') ? 'checked' : ''}" 
+                     onclick="event.stopPropagation(); handleTaskClick(${day}, 'learning', this)"></div>
+              </div>
+              <div class="task-details">
+                <div class="task-section">
+                  <div class="task-section-title">💬 今日必背句型（5句）</div>
+                  ${dailySentences.map((s, i) => `
+                    <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; margin-bottom: 10px;">
+                      <div style="color: var(--accent); font-size: 0.8em; margin-bottom: 5px;">${s.cat}</div>
+                      <div style="font-size: 1.05em; margin-bottom: 5px;"><strong>${i + 1}. ${s.en}</strong></div>
+                      <div style="color: var(--muted);">${s.cn}</div>
+                      <div style="font-size: 0.85em; color: #64748b; margin-top: 5px;">📍 ${s.usage}</div>
+                    </div>
+                  `).join('')}
+                </div>
+                <div class="task-section">
+                  <div class="task-section-title">📋 学习步骤</div>
+                  <ul>
+                    <li>大声朗读每个句子 10 遍，注意语调</li>
+                    <li>遮住英文，看中文说英文</li>
+                    <li>用每个句子造一个你自己的例句</li>
+                    <li>把句子做成 Anki 卡片</li>
+                  </ul>
+                </div>
+                <div class="task-section">
+                  <div class="task-section-title">✅ 完成标准</div>
+                  <p>• 5个句子能脱口而出 • 每个句子造了自己的例句 • 已添加到 Anki</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Task 4: Review -->
+            <div class="task-block review">
+              <div class="task-header">
+                <div class="task-title-wrap">
+                  <span class="task-icon">🔁</span>
+                  <span class="task-title">复习巩固：Anki + 录音</span>
+                  <span class="task-duration">30分钟</span>
+                </div>
+                <div class="task-checkbox ${isTaskCompleted(day, 'review') ? 'checked' : ''}" 
+                     onclick="event.stopPropagation(); handleTaskClick(${day}, 'review', this)"></div>
+              </div>
+              <div class="task-details">
+                <div class="task-section">
+                  <div class="task-section-title">📋 复习任务</div>
+                  <ul>
+                    <li><strong>Anki 复习（15分钟）：</strong>复习到期卡片，错题立即编辑备注</li>
+                    <li><strong>听自己录音（10分钟）：</strong>回放今天的跟读录音，和原音对比找差距</li>
+                    <li><strong>写英文小结（5分钟）：</strong>用英语写3-5句今天学了什么</li>
+                  </ul>
+                </div>
+                <div class="task-section">
+                  <div class="task-section-title">📝 今日小结模板</div>
+                  <div class="gpt-prompt">Today I learned ${dailySentences.length} new sentences about [topic].
+I practiced listening to [material name].
+My pronunciation of [word] needs more work.
+Tomorrow I will focus on [area].</div>
+                </div>
+                <div class="task-section">
+                  <div class="task-section-title">✅ 完成标准</div>
+                  <p>• Anki 到期卡全部复习 • 对比了录音找到差距 • 写了英文小结</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    };
+
+    const renderDays = () => {
+      const container = document.getElementById('daysContainer');
+      let html = '';
+      
+      for (let week = 1; week <= 13; week++) {
+        const startDay = (week - 1) * 7 + 1;
+        const endDay = Math.min(week * 7, 90);
+        const phase = startDay <= 30 ? 1 : (startDay <= 60 ? 2 : 3);
+        
+        html += `<div class="week-header" data-phase="${phase}">📅 ${weekThemes[week] || `第${week}周`} (Day ${startDay}-${endDay})</div>`;
+        
+        for (let day = startDay; day <= endDay; day++) {
+          html += renderDayCard(day);
+        }
+      }
+      
+      container.innerHTML = html;
+    };
+
+    const updateProgressDisplay = () => {
+      const progress = loadProgress();
+      const totalTasks = 90 * 4; // 90 days * 4 tasks
+      const completedTasks = Object.values(progress).filter(v => v === true).length;
+      const completedDays = Math.floor(completedTasks / 4);
+      const totalPercent = Math.round((completedTasks / totalTasks) * 100);
+      
+      document.getElementById('completedDays').textContent = completedDays;
+      document.getElementById('totalProgress').textContent = totalPercent + '%';
+      
+      // Update individual day progress bars
+      for (let day = 1; day <= 90; day++) {
+        const tasks = ['listening', 'speaking', 'learning', 'review'];
+        const completed = tasks.filter(t => isTaskCompleted(day, t)).length;
+        const percent = Math.round((completed / tasks.length) * 100);
+        const dayCard = document.getElementById(`day-${day}`);
+        if (dayCard) {
+          const progressBar = dayCard.querySelector('.progress-bar-fill');
+          const progressText = dayCard.querySelector('.progress-text');
+          if (progressBar) progressBar.style.width = percent + '%';
+          if (progressText) progressText.textContent = `${completed}/${tasks.length}`;
+        }
+      }
+    };
+
+    // ==================== EVENT HANDLERS ====================
+    
+    const toggleDay = (day) => {
+      const card = document.getElementById(`day-${day}`);
+      if (card) card.classList.toggle('open');
+    };
+
+    const handleTaskClick = (day, taskType, element) => {
+      const isCompleted = toggleTask(day, taskType);
+      element.classList.toggle('checked', isCompleted);
+    };
+
+    const copyPrompt = (index) => {
+      const prompt = gptPrompts[index].prompt;
+      navigator.clipboard.writeText(prompt).then(() => {
+        const btn = event.target;
+        btn.textContent = '✅ 已复制';
+        setTimeout(() => btn.textContent = '📋 复制指令', 2000);
+      });
+    };
+
+    // Toolbar actions
+    document.getElementById('expandAll').addEventListener('click', () => {
+      document.querySelectorAll('.day-card').forEach(card => card.classList.add('open'));
+    });
+
+    document.getElementById('collapseAll').addEventListener('click', () => {
+      document.querySelectorAll('.day-card').forEach(card => card.classList.remove('open'));
+    });
+
+    document.getElementById('expandWeek').addEventListener('click', () => {
+      const today = 1; // You can calculate actual day
+      const weekStart = Math.floor((today - 1) / 7) * 7 + 1;
+      const weekEnd = weekStart + 6;
+      document.querySelectorAll('.day-card').forEach(card => {
+        const dayNum = parseInt(card.id.replace('day-', ''));
+        if (dayNum >= weekStart && dayNum <= weekEnd) {
+          card.classList.add('open');
+        }
+      });
+    });
+
+    document.getElementById('exportProgress').addEventListener('click', () => {
+      const progress = loadProgress();
+      const blob = new Blob([JSON.stringify(progress, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'english-90d-progress.json';
+      a.click();
+    });
+
+    document.getElementById('clearProgress').addEventListener('click', () => {
+      if (confirm('确认清除所有进度？此操作不可恢复。')) {
+        localStorage.removeItem(STORAGE_KEY);
+        location.reload();
+      }
+    });
+
+    document.getElementById('printPlan').addEventListener('click', () => window.print());
+
+    document.getElementById('scrollTop').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('jumpToday').addEventListener('click', () => {
+      const day1 = document.getElementById('day-1');
+      if (day1) {
+        day1.classList.add('open');
+        day1.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+    // Phase tabs
+    document.querySelectorAll('.phase-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.phase-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const phase = tab.dataset.phase;
+        
+        document.querySelectorAll('.day-card').forEach(card => {
+          if (card.dataset.phase === phase) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        
+        document.querySelectorAll('.week-header').forEach(header => {
+          if (header.dataset.phase === phase) {
+            header.style.display = 'block';
+          } else {
+            header.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // ==================== INIT ====================
+    renderDays();
+    renderSentences();
+    renderGptPrompts();
+    updateProgressDisplay();
+    
+    // Open Day 1 by default
+    document.getElementById('day-1')?.classList.add('open');
+  </script>
+</body>
+</html>
