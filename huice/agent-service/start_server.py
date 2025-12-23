@@ -16,10 +16,11 @@ import sys
 import json
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-from rag.chat.agent_rag_anything import agent
+# Agent will be initialized lazily after environment is loaded
+agent = None
 
 def setup_environment():
     """Setup required environment variables"""
@@ -83,6 +84,23 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     result: dict
 
+
+@app.on_event("startup")
+def init_agent():
+    """Initialize environment and LangGraph agent on startup.
+
+    This ensures .env is loaded so SILICONFLOW_API_KEY and other
+    settings are available before constructing the agent.
+    """
+    global agent
+
+    # Load environment (.env + other settings)
+    setup_environment()
+
+    # Import and bind the pre-built agent
+    from rag.chat.agent_rag_anything import agent as _agent
+    agent = _agent
+
 @app.get("/ok")
 def health_check():
     return {"status": "ok"}
@@ -90,15 +108,15 @@ def health_check():
 @app.post("/chat", response_model=ChatResponse)
 def chat(req: ChatRequest):
     """Simple chat endpoint using the RAG Anything agent."""
+    if agent is None:
+        raise HTTPException(status_code=503, detail="Agent not initialized")
+
     result = agent.invoke({"messages": [("user", req.query)]})
     return {"result": result}
 
 def main():
     """Start the server"""
     print("🚀 Starting Simple LangGraph API Server...")
-    
-    # Setup environment
-    setup_environment()
     
     # Print server information
     print("\n" + "="*60)
