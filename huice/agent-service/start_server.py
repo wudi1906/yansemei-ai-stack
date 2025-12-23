@@ -16,6 +16,11 @@ import sys
 import json
 from pathlib import Path
 
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+from rag.chat.agent_rag_anything import agent
+
 def setup_environment():
     """Setup required environment variables"""
     # Add src to Python path
@@ -70,6 +75,24 @@ def setup_environment():
             print("⚠️  python-dotenv not installed, skipping .env file")
 # pylint: disable  Mi80OmFIVnBZMlhsa0xUb3Y2bzZRamd4U3c9PToyY2RhNDJiNw==
 
+app = FastAPI(title="AuroraAI Agent Service")
+
+class ChatRequest(BaseModel):
+    query: str
+
+class ChatResponse(BaseModel):
+    result: dict
+
+@app.get("/ok")
+def health_check():
+    return {"status": "ok"}
+
+@app.post("/chat", response_model=ChatResponse)
+def chat(req: ChatRequest):
+    """Simple chat endpoint using the RAG Anything agent."""
+    result = agent.invoke({"messages": [("user", req.query)]})
+    return {"result": result}
+
 def main():
     """Start the server"""
     print("🚀 Starting Simple LangGraph API Server...")
@@ -89,12 +112,12 @@ def main():
         # Import uvicorn after environment setup
         import uvicorn
         
-        # Start the server directly
+        # Start the server directly using local FastAPI app
         uvicorn.run(
-            "langgraph_api.server:app",
+            app,
             host="0.0.0.0",
             port=2025,
-            reload=True,
+            reload=False,
             access_log=False,
             log_config={
                 "version": 1,
