@@ -20,9 +20,9 @@ except ImportError:
 def get_model():
     """
     Factory function to get the LLM based on environment variables.
-    Supported providers: 'deepseek', 'google', 'ollama'
+    Supported providers: 'siliconflow', 'deepseek', 'google', 'ollama'
     """
-    provider = os.getenv("LLM_PROVIDER", "deepseek").lower()
+    provider = os.getenv("LLM_PROVIDER", "siliconflow").lower()
     
     if provider == "ollama":
         if not ChatOllama:
@@ -56,18 +56,33 @@ def get_model():
         )
         
     elif provider == "deepseek":
-        # DeepSeek - 性价比最高的选择
-        # deepseek-chat: 输入0.2-2元/百万tokens，输出3元/百万tokens，支持Tool Calls
+        # DeepSeek 官方 API
         api_key = os.getenv("DEEPSEEK_API_KEY")
         if not api_key:
             raise ValueError("DEEPSEEK_API_KEY not found in environment variables")
         model_name = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
+        base_url = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
         print(f"🚀 Using LLM: {model_name} (DeepSeek)")
         return ChatOpenAI(
             model=model_name,
             api_key=api_key,
-            base_url="https://api.deepseek.com",
+            base_url=base_url,
             temperature=0
+        )
+    
+    elif provider in ("siliconflow", "sf"):
+        # SiliconFlow - 统一 DeepSeek / Qwen 访问的首选
+        api_key = os.getenv("SILICONFLOW_API_KEY")
+        if not api_key:
+            raise ValueError("SILICONFLOW_API_KEY not found in environment variables")
+        model_name = os.getenv("SILICONFLOW_MODEL", "deepseek-ai/DeepSeek-V3")
+        base_url = os.getenv("SILICONFLOW_BASE_URL", "https://api.siliconflow.com/v1")
+        print(f"🚀 Using LLM: {model_name} (SiliconFlow)")
+        return ChatOpenAI(
+            model=model_name,
+            api_key=api_key,
+            base_url=base_url,
+            temperature=0,
         )
     else:
         raise ValueError(f"Unsupported LLM_PROVIDER: {provider}")
