@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": "src"
+  },
+  "_buildId": "id_MC81OmFIVnBZMlhsa0xUb3Y2bzZaRkZQT1E9PTpmNTJlMTZkYg==",
+  "include": [
+    "src"
+  ],
+  "_deployId": "id_MS81OmFIVnBZMlhsa0xUb3Y2bzZaRkZQT1E9PTpmNTJlMTZkYg==",
+  "_releaseId": "id_Mi81OmFIVnBZMlhsa0xUb3Y2bzZaRkZQT1E9PTpmNTJlMTZkYg==",
+  "_versionId": "id_My81OmFIVnBZMlhsa0xUb3Y2bzZaRkZQT1E9PTpmNTJlMTZkYg==",
+  "_buildHash": "NC81OmFIVnBZMlhsa0xUb3Y2bzZaRkZQT1E9PTpmNTJlMTZkYg=="
+}

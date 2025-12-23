@@ -1,0 +1,5 @@
+langgraph
+langchain-deepseek
+langgraph-cli[inmem]
+langchain_community
+langchain-mcp-adapters

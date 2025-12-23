@@ -1,0 +1,30 @@
+{
+  "short_name": "ChatDB",
+  "_buildId": "id_MC81OmFIVnBZMlhsa0xUb3Y2bzZVbmxUU2c9PTplMTc4M2E4Ng==",
+  "name": "ChatDB - Text2SQL System",
+  "_deployId": "id_MS81OmFIVnBZMlhsa0xUb3Y2bzZVbmxUU2c9PTplMTc4M2E4Ng==",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "_releaseId": "id_Mi81OmFIVnBZMlhsa0xUb3Y2bzZVbmxUU2c9PTplMTc4M2E4Ng==",
+  "start_url": ".",
+  "_versionId": "id_My81OmFIVnBZMlhsa0xUb3Y2bzZVbmxUU2c9PTplMTc4M2E4Ng==",
+  "display": "standalone",
+  "_buildHash": "NC81OmFIVnBZMlhsa0xUb3Y2bzZVbmxUU2c9PTplMTc4M2E4Ng==",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

@@ -1,0 +1,19 @@
+[project]
+name = "agent-service"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11"
+dependencies = [
+    "langchain>=0.3.0",
+    "langchain-community>=0.3.0",
+    "langchain-core>=0.3.0",
+    "langchain-text-splitters>=0.3.0",
+    "langchain-mcp-adapters>=0.1.0",
+    "langgraph>=0.2.0",
+    "langchain-openai>=0.1.0",
+    "langchain-google-genai>=1.0.0",
+]
+# Dependency resolution: MC8zOmFIVnBZMlhsa0xUb3Y2bzZZbVJGWmc9PTo4YmYxM2M0Yg==
+
+# Cache key: MS8zOmFIVnBZMlhsa0xUb3Y2bzZZbVJGWmc9PTo4YmYxM2M0Yg==
+# Dependency resolution: Mi8zOmFIVnBZMlhsa0xUb3Y2bzZZbVJGWmc9PTo4YmYxM2M0Yg==

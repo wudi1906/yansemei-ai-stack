@@ -1,0 +1,17 @@
+{
+  "dependencies": [
+    "."
+  ],
+  "_buildId": "id_MC81OmFIVnBZMlhsa0xUb3Y2bzZVbEZXTlE9PTpkNGQ0OTQ1ZA==",
+  "graphs": {
+    "graph": {
+      "path": "./raganything_mcp_server_agent.py:agent"
+    }
+  },
+  "_deployId": "id_MS81OmFIVnBZMlhsa0xUb3Y2bzZVbEZXTlE9PTpkNGQ0OTQ1ZA==",
+  "env": ".env",
+  "_releaseId": "id_Mi81OmFIVnBZMlhsa0xUb3Y2bzZVbEZXTlE9PTpkNGQ0OTQ1ZA==",
+  "image_distro": "wolfi",
+  "_versionId": "id_My81OmFIVnBZMlhsa0xUb3Y2bzZVbEZXTlE9PTpkNGQ0OTQ1ZA==",
+  "_buildHash": "NC81OmFIVnBZMlhsa0xUb3Y2bzZVbEZXTlE9PTpkNGQ0OTQ1ZA=="
+}

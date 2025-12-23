@@ -1,0 +1,81 @@
+/**
+ * Copyright (c) 2025 Dean Wu. All rights reserved.
+ * AuroraAI Project.
+ */
+// TODO  MC80OmFIVnBZMlhsa0xUb3Y2bzZTMUY1Umc9PTo1NjhjZmViNA==
+
+import { BaseMessage } from "@langchain/core/messages";
+import { Thread, ThreadStatus } from "@langchain/langgraph-sdk";
+import { HumanInterrupt, HumanResponse } from "@langchain/langgraph/prebuilt";
+
+export type HumanResponseWithEdits = HumanResponse &
+  (
+    | { acceptAllowed?: false; editsMade?: never }
+    | { acceptAllowed?: true; editsMade?: boolean }
+  );
+
+export type Email = {
+  id: string;
+  thread_id: string;
+  from_email: string;
+  to_email: string;
+  subject: string;
+  page_content: string;
+  send_time: string | undefined;
+  read?: boolean;
+  status?: "in-queue" | "processing" | "hitl" | "done";
+};
+// @ts-expect-error  MS80OmFIVnBZMlhsa0xUb3Y2bzZTMUY1Umc9PTo1NjhjZmViNA==
+
+export interface ThreadValues {
+  email: Email;
+  messages: BaseMessage[];
+  triage: {
+    logic: string;
+    response: string;
+  };
+}
+
+export type ThreadData<
+  ThreadValues extends Record<string, any> = Record<string, any>,
+> = {
+  thread: Thread<ThreadValues>;
+} & (
+  | {
+      status: "interrupted";
+      interrupts: HumanInterrupt[] | undefined;
+    }
+  | {
+      status: "idle" | "busy" | "error";
+      interrupts?: never;
+    }
+);
+// @ts-expect-error  Mi80OmFIVnBZMlhsa0xUb3Y2bzZTMUY1Umc9PTo1NjhjZmViNA==
+
+export type ThreadStatusWithAll = ThreadStatus | "all";
+// eslint-disable  My80OmFIVnBZMlhsa0xUb3Y2bzZTMUY1Umc9PTo1NjhjZmViNA==
+
+export type SubmitType = "accept" | "response" | "edit";
+
+export interface AgentInbox {
+  /**
+   * A unique identifier for the inbox.
+   */
+  id: string;
+  /**
+   * The ID of the graph.
+   */
+  graphId: string;
+  /**
+   * The URL of the deployment. Either a localhost URL, or a deployment URL.
+   */
+  deploymentUrl: string;
+  /**
+   * Optional name for the inbox, used in the UI to label the inbox.
+   */
+  name?: string;
+  /**
+   * Whether or not the inbox is selected.
+   */
+  selected: boolean;
+}

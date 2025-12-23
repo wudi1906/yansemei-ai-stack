@@ -1,0 +1,36 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="auroraGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- 主圆形背景 -->
+  <circle cx="24" cy="24" r="22" fill="url(#auroraGrad)"/>
+  
+  <!-- 内圈装饰 -->
+  <circle cx="24" cy="24" r="18" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+  
+  <!-- Aurora 极光波浪效果 -->
+  <path d="M10 26 Q17 18, 24 24 T38 20" stroke="url(#goldGrad)" stroke-width="2.5" fill="none" stroke-linecap="round" filter="url(#glow)" opacity="0.9"/>
+  <path d="M12 32 Q19 24, 26 30 T42 26" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+  
+  <!-- "A" 字母 -->
+  <text x="24" y="30" font-family="Inter, SF Pro Display, -apple-system, sans-serif" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="-0.5">A</text>
+  
+  <!-- 顶部光点 -->
+  <circle cx="24" cy="6" r="2" fill="url(#goldGrad)" opacity="0.9"/>
+</svg>

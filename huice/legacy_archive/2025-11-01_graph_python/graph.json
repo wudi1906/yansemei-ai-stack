@@ -1,0 +1,13 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "sql_agent": {
+      "path": "./sql_agent.py:agent"
+    },
+    "tool_graph": {
+      "path": "./graphs_examples/tool_call_example.py:graph"
+    }
+  },
+  "env": ".env",
+  "image_distro": "wolfi"
+}

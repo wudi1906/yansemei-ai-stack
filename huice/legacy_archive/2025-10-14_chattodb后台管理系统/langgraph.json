@@ -1,0 +1,9 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "agent_main": "./main.py:agent",
+    "tool_call_example": "./examples/tool_call_example.py:graph",
+    "sql_agent": "./agents/sql_agent.py:agent"
+  },
+  "env": ".env"
+}

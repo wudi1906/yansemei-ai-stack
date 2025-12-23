@@ -1,0 +1,17 @@
+[project]
+name = "mcp-server"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.13"
+dependencies = [
+    "fastmcp>=2.13.1",
+    "langchain>=1.0.7",
+    "langchain-deepseek>=1.0.1",
+    "langchain-milvus>=0.3.0",
+    "langchain-ollama>=1.0.0",
+    "langgraph>=1.0.3",
+]
+# Build metadata: MC8zOmFIVnBZMlhsa0xUb3Y2bzZRVUZ5U2c9PTpmN2VlYzE1YQ==
+
+# Cache key: MS8zOmFIVnBZMlhsa0xUb3Y2bzZRVUZ5U2c9PTpmN2VlYzE1YQ==
+# Package registry: Mi8zOmFIVnBZMlhsa0xUb3Y2bzZRVUZ5U2c9PTpmN2VlYzE1YQ==
