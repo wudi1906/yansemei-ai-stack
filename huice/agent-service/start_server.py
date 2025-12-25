@@ -14,7 +14,7 @@ import uuid
 from pathlib import Path
 from typing import Any, Optional
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Depends, Header
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -55,6 +55,41 @@ setup_environment()
 from rag.chat.agent_rag_anything import agent
 
 app = FastAPI(title="AuroraAI Agent Service")
+
+# API Key 认证
+API_KEY = os.getenv("API_KEY", "")
+API_KEY_WHITELIST = ["/", "/ok", "/info", "/health", "/docs", "/openapi.json"]
+
+
+async def verify_api_key(
+    request: Request,
+    x_api_key: Optional[str] = Header(None, alias="X-API-Key"),
+    authorization: Optional[str] = Header(None),
+):
+    """验证 API Key"""
+    # 如果没有配置 API_KEY，跳过验证
+    if not API_KEY:
+        return None
+    
+    # 白名单路径不需要验证
+    if request.url.path in API_KEY_WHITELIST:
+        return None
+    
+    # 从 Header 获取 API Key
+    provided_key = x_api_key
+    if not provided_key and authorization:
+        # 支持 Bearer token 格式
+        if authorization.startswith("Bearer "):
+            provided_key = authorization[7:]
+    
+    if provided_key != API_KEY:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or missing API Key",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    return provided_key
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -89,14 +124,14 @@ def info():
     }
 
 
-@app.post("/chat")
+@app.post("/chat", dependencies=[Depends(verify_api_key)])
 def chat(req: ChatRequest):
     """Simple chat endpoint"""
     result = agent.invoke({"messages": [("user", req.query)]})
     return {"result": result}
 
 
-@app.post("/threads")
+@app.post("/threads", dependencies=[Depends(verify_api_key)])
 def create_thread():
     """Create a new thread"""
     return {"thread_id": str(uuid.uuid4())}
@@ -186,7 +221,7 @@ async def generate_sse_response(thread_id: str, user_msg: str):
         yield create_sse_event("error", {"message": str(e)})
 
 
-@app.post("/threads/{thread_id}/runs/stream")
+@app.post("/threads/{thread_id}/runs/stream", dependencies=[Depends(verify_api_key)])
 async def run_thread_stream(thread_id: str, request: Request):
     """Handle stream requests from Chat UI with SSE"""
     body = await request.json()
@@ -208,7 +243,7 @@ async def run_thread_stream(thread_id: str, request: Request):
     )
 
 
-@app.post("/threads/{thread_id}/messages")
+@app.post("/threads/{thread_id}/messages", dependencies=[Depends(verify_api_key)])
 async def post_thread_message(thread_id: str, request: Request):
     """Post message to thread"""
     body = await request.json()
