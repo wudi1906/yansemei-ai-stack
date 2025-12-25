@@ -41,6 +41,9 @@ export default defineConfig({
     }
   },
   server: {
+    host: '0.0.0.0',
+    port: 5173,
+    allowedHosts: ['chat.yansemei.com'],
     proxy: {
       '/api': {
         ...proxyOptions,
