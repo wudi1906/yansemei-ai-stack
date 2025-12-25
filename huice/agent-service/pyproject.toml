@@ -12,6 +12,7 @@ dependencies = [
     "langgraph>=0.2.0",
     "langchain-openai>=0.1.0",
     "langchain-google-genai>=1.0.0",
+    "nest-asyncio>=1.6.0",
 ]
 # Dependency resolution: MC8zOmFIVnBZMlhsa0xUb3Y2bzZZbVJGWmc9PTo4YmYxM2M0Yg==
 

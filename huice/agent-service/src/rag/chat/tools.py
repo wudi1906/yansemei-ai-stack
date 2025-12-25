@@ -3,17 +3,13 @@ Copyright (c) 2025 Dean Wu. All rights reserved.
 AuroraAI Project.
 """
 
-from langchain_core.tools import tool
-# type: ignore  MC8yOmFIVnBZMlhsa0xUb3Y2bzZiWEZJWmc9PTowYTVkNTIzOQ==
-
-import asyncio
 import json
 import os
+import time
 from pathlib import Path
 
-from langchain_mcp_adapters.client import MultiServerMCPClient
 from langchain_core.tools import tool
-# pylint: disable  MS8yOmFIVnBZMlhsa0xUb3Y2bzZiWEZJWmc9PTowYTVkNTIzOQ==
+
 
 @tool
 def get_available_collections() -> str:
@@ -24,7 +20,6 @@ def get_available_collections() -> str:
     Returns:
         str: 包含所有集合信息的JSON字符串，每个集合包含name和description字段
     """
-    # 获取当前文件所在目录
     current_dir = Path(__file__).parent
     collections_file = current_dir / "collections.json"
 
@@ -39,22 +34,31 @@ def get_available_collections() -> str:
     except Exception as e:
         return json.dumps({"error": f"读取集合信息失败: {str(e)}"}, ensure_ascii=False)
 
+
 def get_mcp_rag_tools():
     """获取 MCP RAG 工具，带重试机制"""
-    import time
+    import nest_asyncio
+    import asyncio
+    
+    # 允许在已有事件循环中嵌套运行
+    nest_asyncio.apply()
+    
+    # 从环境变量获取 MCP URL，默认使用 Docker 容器名
+    mcp_url = os.environ.get("MCP_URL", "http://mcp:8001/sse")
+    print(f"🔗 Connecting to MCP Server at: {mcp_url}")
     
     async def _fetch_tools():
-        # langchain-mcp-adapters 0.1.0+ 新 API：不再使用 async with
+        from langchain_mcp_adapters.client import MultiServerMCPClient
+        
         client = MultiServerMCPClient(
             {
                 "mcp-server-rag": {
-                    "url": "http://127.0.0.1:8001/sse",
+                    "url": mcp_url,
                     "transport": "sse",
                 }
             }
         )
         try:
-            # 直接调用 get_tools()，不使用上下文管理器
             return await client.get_tools()
         except Exception as e:
             print(f"Error fetching tools: {e}")
@@ -64,12 +68,19 @@ def get_mcp_rag_tools():
     max_retries = 5
     for attempt in range(max_retries):
         try:
-            tools = asyncio.run(_fetch_tools())
+            # 使用 nest_asyncio 后可以安全调用 asyncio.run()
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            try:
+                tools = loop.run_until_complete(_fetch_tools())
+            finally:
+                loop.close()
+            
             if tools:
                 print(f"✅ Successfully loaded {len(tools)} MCP RAG tools:")
-                for tool in tools:
-                    tool_desc = tool.description[:50] + "..." if len(tool.description) > 50 else tool.description
-                    print(f"   - {tool.name}: {tool_desc}")
+                for t in tools:
+                    tool_desc = t.description[:50] + "..." if len(t.description) > 50 else t.description
+                    print(f"   - {t.name}: {tool_desc}")
                 return tools
             else:
                 print(f"⚠️ MCP tools fetch attempt {attempt + 1}/{max_retries}: got empty list")
