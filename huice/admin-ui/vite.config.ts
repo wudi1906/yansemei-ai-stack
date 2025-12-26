@@ -8,9 +8,9 @@ import path from 'path'
 import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
 
-// RAG Core 后端地址 - 使用 IPv4 地址连接 (RAG Core 监听 0.0.0.0)
-// 注意：启动脚本 start_all.py 会清除 HTTP_PROXY 环境变量，确保代理直连本地服务
-const BACKEND_URL = 'http://127.0.0.1:9621'
+// RAG Core 后端地址
+// Docker 环境使用 rag-core:9621，本地开发使用 127.0.0.1:9621
+const BACKEND_URL = process.env.VITE_BACKEND_URL || 'http://rag-core:9621'
 
 // 代理配置
 const proxyOptions = {
