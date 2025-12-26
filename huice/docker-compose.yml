@@ -1,0 +1,93 @@
+# Huice AI Platform - Docker Compose Configuration
+# 
+# 部署位置: VPS /home/ai-stack/yansemei-ai-stack/huice/
+# 最后更新: 2025-12-26
+#
+# 重要说明:
+# - NEXT_PUBLIC_* 环境变量是给浏览器端使用的，必须使用公网域名
+# - 服务间内部通信使用 Docker 网络名称（如 agent-service:2025）
+# - 所有服务都连接到 npm_default 网络，与 NPM 共享网络
+
+networks:
+  npm_default:
+    external: true
+
+services:
+  # ============================================
+  # RAG Core - LightRAG 知识图谱引擎
+  # ============================================
+  rag-core:
+    build:
+      context: ./rag-core
+    container_name: huice-rag-core
+    ports: ["9621:9621"]
+    volumes:
+      - ./rag-core/.env:/app/.env:ro
+      - ./rag_storage:/app/rag_storage
+      - ./inputs:/app/inputs
+    networks: [npm_default]
+    restart: unless-stopped
+
+  # ============================================
+  # MCP Server - RAG 工具服务
+  # ============================================
+  mcp:
+    build:
+      context: ..
+      dockerfile: huice/mcp-server/Dockerfile
+    container_name: huice-mcp
+    ports: ["8001:8001"]
+    environment:
+      - RAG_API_BASE=http://rag-core:9621
+    depends_on: [rag-core]
+    networks: [npm_default]
+    restart: unless-stopped
+
+  # ============================================
+  # Agent Service - LangGraph Agent 大脑
+  # ============================================
+  agent-service:
+    build:
+      context: ./agent-service
+    container_name: huice-agent-service
+    ports: ["2025:2025"]
+    environment:
+      - MCP_SERVER_URL=http://mcp:8001/sse
+      - RAG_API_BASE=http://rag-core:9621
+      # API_KEY 从 .env 文件读取
+    depends_on: [mcp, rag-core]
+    networks: [npm_default]
+    restart: unless-stopped
+
+  # ============================================
+  # Chat UI - AuroraAI 对话界面
+  # ============================================
+  # 重要: NEXT_PUBLIC_API_URL 必须使用公网域名！
+  # 因为这个变量是给浏览器端使用的，浏览器无法访问 Docker 内部网络
+  chat-ui:
+    build:
+      context: ./chat-ui
+    container_name: huice-chat-ui
+    ports: ["3000:3000"]
+    environment:
+      - NEXT_PUBLIC_API_URL=https://agent.yansemei.com
+      - NEXT_PUBLIC_ASSISTANT_ID=chat_agent
+    depends_on: [agent-service]
+    networks: [npm_default]
+    restart: unless-stopped
+
+  # ============================================
+  # Admin UI - LightRAG 管理界面
+  # ============================================
+  # 重要: VITE_BACKEND_URL 也是给浏览器端使用的
+  # 但 Admin UI 可能有服务端渲染，需要测试确认
+  admin-ui:
+    build:
+      context: ./admin-ui
+    container_name: huice-admin-ui
+    ports: ["5173:5173"]
+    environment:
+      - VITE_BACKEND_URL=http://rag-core:9621
+    depends_on: [rag-core]
+    networks: [npm_default]
+    restart: unless-stopped

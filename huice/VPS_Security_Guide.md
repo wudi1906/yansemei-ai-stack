@@ -72,46 +72,43 @@ du -sh /home/ai-stack/*
 
 ## 2. Nginx Proxy Manager 访问控制
 
-### 2.1 创建 Access List（访问列表）
+### ⚠️ 重要：NPM Basic Auth 不适用于 SPA 应用！
 
-在 NPM 管理界面 (http://your-vps-ip:81) 中：
+**问题说明：**
+NPM 的 Access List (Basic Auth) **不适合**单页应用（SPA），如：
+- Chat UI (Next.js)
+- Admin UI (Vite/React)
 
+**原因：**
+1. SPA 应用会发起多个 HTTP 请求（JS、CSS、图片、API 调用）
+2. NPM Basic Auth 对**每个请求**都要求认证
+3. 导致浏览器反复弹出登录框，用户体验极差
+
+### 2.1 正确的认证策略（"瓶子"模型）
+
+| 域名 | 服务 | NPM 设置 | 认证方式 |
+|------|------|----------|----------|
+| `aurora.yansemei.com` | Chat UI | **Publicly Accessible** | 无（内部调用 Agent API） |
+| `chat.yansemei.com` | Admin UI | **Publicly Accessible** | LightRAG WebUI 内置登录 |
+| `agent.yansemei.com` | Agent API | **Publicly Accessible** | API Key（外部调用需要） |
+| `kb.yansemei.com` | RAG Core | **Publicly Accessible** | API Key + WebUI 登录 |
+| `demo.yansemei.com` | FastGPT | **Publicly Accessible** | FastGPT 内置登录 |
+| `flow.yansemei.com` | n8n | **Publicly Accessible** | n8n 内置登录 |
+
+### 2.2 如何设置为 Publicly Accessible
+
+1. 访问 NPM 管理界面 (http://your-vps-ip:81)
+2. 进入 **Proxy Hosts**
+3. 点击域名右侧的 **⋮** → **Edit**
+4. 切换到 **Access** 标签
+5. 选择 **Publicly Accessible**
+6. 保存
+
+### 2.3 删除已创建的 Access Lists（如果有）
+
+如果之前创建了 Access Lists，需要删除：
 1. 进入 **Access Lists** 标签
-2. 点击 **Add Access List**
-3. 配置如下：
-
-**Details 标签：**
-- Name: `Huice-Admin-Auth`
-- Satisfy Any: `关闭`（需要同时满足所有条件）
-
-**Authorization 标签：**
-- 添加用户名和密码：
-  - Username: `admin`
-  - Password: `你的强密码`（建议 16+ 字符，包含大小写、数字、特殊字符）
-
-**Access 标签（可选 - IP 白名单）：**
-- 如果你有固定 IP，可以添加：
-  - Allow: `你的IP地址`
-  - Deny: `all`
-
-### 2.2 为各服务应用 Access List
-
-在 NPM 的 **Proxy Hosts** 中，编辑每个需要保护的域名：
-
-| 域名 | 是否需要认证 | 说明 |
-|------|-------------|------|
-| `chat.yansemei.com` (Admin UI) | ✅ 是 | 管理界面，必须保护 |
-| `aurora.yansemei.com` (Chat UI) | ✅ 是 | 对话界面，建议保护 |
-| `agent.yansemei.com` (Agent API) | ⚠️ API Key | 使用 API Key 认证 |
-| `kb.yansemei.com` (RAG Core) | ⚠️ API Key | 使用 API Key 认证 |
-| `demo.yansemei.com` (FastGPT) | ✅ 是 | FastGPT 自带认证 |
-| `flow.yansemei.com` (n8n) | ✅ 是 | n8n 自带认证 |
-
-**操作步骤：**
-1. 点击域名右侧的 **⋮** → **Edit**
-2. 切换到 **Access** 标签
-3. 选择刚创建的 `Huice-Admin-Auth`
-4. 保存
+2. 删除所有自定义的 Access Lists（如 `Huice-Auth`、`AuroraAI` 等）
 
 ### 2.3 添加安全 Headers
 
