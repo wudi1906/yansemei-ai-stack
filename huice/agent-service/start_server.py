@@ -58,7 +58,20 @@ app = FastAPI(title="AuroraAI Agent Service")
 
 # API Key 认证
 API_KEY = os.getenv("API_KEY", "")
-API_KEY_WHITELIST = ["/", "/ok", "/info", "/health", "/docs", "/openapi.json"]
+
+# 白名单路径 - 这些路径不需要 API Key 认证
+# 包括：健康检查、文档、以及 Chat UI 需要调用的所有接口
+API_KEY_WHITELIST = [
+    # 基础接口
+    "/", "/ok", "/info", "/health", "/docs", "/openapi.json",
+    # Chat UI 需要的接口（前端公开访问，不携带 API Key）
+    "/threads", "/threads/search",
+]
+
+# 白名单路径前缀 - 匹配以这些前缀开头的路径
+API_KEY_WHITELIST_PREFIXES = [
+    "/threads/",  # 匹配 /threads/{thread_id}/runs/stream 等
+]
 
 
 async def verify_api_key(
@@ -71,9 +84,14 @@ async def verify_api_key(
     if not API_KEY:
         return None
     
-    # 白名单路径不需要验证
+    # 白名单路径不需要验证（精确匹配）
     if request.url.path in API_KEY_WHITELIST:
         return None
+    
+    # 白名单前缀不需要验证（前缀匹配）
+    for prefix in API_KEY_WHITELIST_PREFIXES:
+        if request.url.path.startswith(prefix):
+            return None
     
     # 从 Header 获取 API Key
     provided_key = x_api_key
@@ -131,9 +149,9 @@ def chat(req: ChatRequest):
     return {"result": result}
 
 
-@app.post("/threads", dependencies=[Depends(verify_api_key)])
+@app.post("/threads")
 def create_thread():
-    """Create a new thread"""
+    """Create a new thread - Chat UI 调用，无需 API Key"""
     return {"thread_id": str(uuid.uuid4())}
 
 
@@ -221,9 +239,9 @@ async def generate_sse_response(thread_id: str, user_msg: str):
         yield create_sse_event("error", {"message": str(e)})
 
 
-@app.post("/threads/{thread_id}/runs/stream", dependencies=[Depends(verify_api_key)])
+@app.post("/threads/{thread_id}/runs/stream")
 async def run_thread_stream(thread_id: str, request: Request):
-    """Handle stream requests from Chat UI with SSE"""
+    """Handle stream requests from Chat UI with SSE - 无需 API Key"""
     body = await request.json()
     print(f"📥 Request: {json.dumps(body, ensure_ascii=False)[:300]}")
     
@@ -243,9 +261,9 @@ async def run_thread_stream(thread_id: str, request: Request):
     )
 
 
-@app.post("/threads/{thread_id}/messages", dependencies=[Depends(verify_api_key)])
+@app.post("/threads/{thread_id}/messages")
 async def post_thread_message(thread_id: str, request: Request):
-    """Post message to thread"""
+    """Post message to thread - Chat UI 调用，无需 API Key"""
     body = await request.json()
     user_msg = extract_user_message(body)
     if not user_msg:
