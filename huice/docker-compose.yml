@@ -154,6 +154,7 @@ services:
     ports: ["8001:8001"]
     environment:
       - RAG_CORE_API_URL=http://rag-core:9621
+      - RAG_CORE_API_KEY=75f5b78ed421819d66394293e843872ef2fc2b74909da6b5edcce7d8f1eb33fa
     depends_on: [rag-core]
     networks: [npm_default]
     restart: unless-stopped
