@@ -107,7 +107,7 @@ services:
 
   # FastGPT - 客户友好型 AI 应用平台
   fastgpt:
-    image: ghcr.io/labring/fastgpt:v4.8.15
+    image: ghcr.io/labring/fastgpt:v4.8.16-fix2
     container_name: fastgpt
     restart: unless-stopped
     ports:
