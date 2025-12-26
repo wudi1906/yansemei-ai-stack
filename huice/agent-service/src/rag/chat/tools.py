@@ -36,6 +36,56 @@ def get_available_collections() -> str:
         return json.dumps({"error": f"读取集合信息失败: {str(e)}"}, ensure_ascii=False)
 
 
+def _wrap_async_tool_to_sync(async_tool):
+    """将异步 MCP 工具包装成同步工具，解决 StructuredTool sync invocation 问题"""
+    import asyncio
+    from functools import wraps
+    from langchain_core.tools import StructuredTool
+    
+    original_name = async_tool.name
+    original_description = async_tool.description
+    original_args_schema = getattr(async_tool, 'args_schema', None)
+    
+    # 获取原始的异步调用函数
+    original_coroutine = async_tool.coroutine if hasattr(async_tool, 'coroutine') else None
+    
+    def sync_func(**kwargs):
+        """同步包装函数，在新线程中运行异步代码"""
+        result_container = [None]
+        error_container = [None]
+        
+        def run_async():
+            try:
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                try:
+                    if original_coroutine:
+                        result_container[0] = loop.run_until_complete(original_coroutine(**kwargs))
+                    else:
+                        # 如果没有 coroutine，尝试使用 ainvoke
+                        result_container[0] = loop.run_until_complete(async_tool.ainvoke(kwargs))
+                finally:
+                    loop.close()
+            except Exception as e:
+                error_container[0] = e
+        
+        thread = threading.Thread(target=run_async)
+        thread.start()
+        thread.join(timeout=60)  # 60秒超时
+        
+        if error_container[0]:
+            return f"Error: {str(error_container[0])}"
+        return result_container[0]
+    
+    # 创建新的同步工具
+    return StructuredTool.from_function(
+        func=sync_func,
+        name=original_name,
+        description=original_description,
+        args_schema=original_args_schema,
+    )
+
+
 def get_mcp_rag_tools():
     """获取 MCP RAG 工具，使用独立线程运行事件循环"""
     import asyncio
@@ -101,10 +151,16 @@ def get_mcp_rag_tools():
                 print(f"⚠️ MCP tools fetch attempt {attempt + 1}/{max_retries} failed: {error_result[0]}")
             elif tools_result:
                 print(f"✅ Successfully loaded {len(tools_result)} MCP RAG tools:")
+                # 将异步工具包装成同步工具
+                sync_tools = []
                 for t in tools_result:
                     tool_desc = t.description[:50] + "..." if len(t.description) > 50 else t.description
                     print(f"   - {t.name}: {tool_desc}")
-                return list(tools_result)
+                    # 包装成同步工具
+                    sync_tool = _wrap_async_tool_to_sync(t)
+                    sync_tools.append(sync_tool)
+                print(f"✅ Wrapped {len(sync_tools)} tools to sync version")
+                return sync_tools
             else:
                 print(f"⚠️ MCP tools fetch attempt {attempt + 1}/{max_retries}: got empty list")
         except Exception as e:
