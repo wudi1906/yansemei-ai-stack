@@ -29,4 +29,5 @@ RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
 # 对外端口（默认 9621）
 EXPOSE 9621
 
-CMD ["python", "-m", "lightrag.service.api"]
+# 正确的启动命令
+CMD ["python", "-m", "lightrag.api.lightrag_server"]
