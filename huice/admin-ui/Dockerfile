@@ -1,8 +1,10 @@
-# Admin UI Dockerfile (Vite + React)
+# Admin UI Dockerfile (Vite + React - Development Mode)
 # Copyright (c) 2025 Dean Wu. All rights reserved.
 # AuroraAI Project.
+#
+# 注意：Admin UI 使用开发模式运行，因为它需要代理到 RAG Core
 
-FROM node:20-alpine AS builder
+FROM node:20-alpine
 
 WORKDIR /app
 
@@ -15,25 +17,7 @@ RUN npm ci
 # 复制源代码
 COPY . .
 
-# 构建应用
-RUN npm run build-no-bun
-
-# 生产镜像 - 使用 nginx 提供静态文件
-FROM nginx:alpine AS runner
-
-# 复制构建产物到 nginx
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# 复制 nginx 配置
-RUN echo 'server { \
-    listen 5173; \
-    root /usr/share/nginx/html; \
-    index index.html; \
-    location / { \
-        try_files $uri $uri/ /index.html; \
-    } \
-}' > /etc/nginx/conf.d/default.conf
-
 EXPOSE 5173
 
-CMD ["nginx", "-g", "daemon off;"]
+# 使用开发模式运行（支持代理功能）
+CMD ["npm", "run", "dev-no-bun", "--", "--host", "0.0.0.0"]
