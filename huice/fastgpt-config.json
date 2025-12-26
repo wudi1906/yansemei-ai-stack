@@ -75,11 +75,11 @@
   ],
   "vectorModels": [
     {
-      "model": "BAAI/bge-m3",
-      "name": "BGE-M3 (SiliconFlow)",
+      "model": "Qwen/Qwen3-Embedding-0.6B",
+      "name": "Qwen3-Embedding-0.6B (SiliconFlow)",
       "charsPointsPrice": 0,
       "defaultToken": 512,
-      "maxToken": 8192,
+      "maxToken": 32000,
       "weight": 100
     }
   ],
