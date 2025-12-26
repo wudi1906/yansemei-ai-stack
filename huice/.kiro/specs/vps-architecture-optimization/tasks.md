@@ -13,9 +13,12 @@
   - 未使用卷: 32 个已删除
   - 系统日志: 192MB 已释放
   - 删除 `/home/ai-stack/fiverr` (旧重复目录)
-- [ ] **Phase 1**: 部署 FastGPT/OneAPI (进行中)
+- [x] **Phase 1**: 部署 FastGPT/OneAPI (已完成)
+  - FastGPT v4.8.1 稳定版部署成功
+  - OneAPI 配置 SiliconFlow + DeepSeek 双渠道
+  - 所有服务健康检查通过
 - [ ] **Phase 2**: 集成 FastGPT 与 Huice (待开始)
-- [ ] **Phase 3**: 更新文档与配置 (部分完成)
+- [x] **Phase 3**: 更新文档与配置 (已完成)
 - [ ] **Phase 4**: 测试验证 (待开始)
 
 ---

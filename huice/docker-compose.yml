@@ -106,26 +106,18 @@ services:
     networks: [npm_default]
 
   # FastGPT - 客户友好型 AI 应用平台
+  # 注意: 使用 v4.8.1 稳定版，最新版需要 plugin 服务
+  # 实际部署使用 docker run 命令，挂载 config.json
   fastgpt:
-    image: ghcr.io/labring/fastgpt:v4.8.16-fix2
+    image: registry.cn-hangzhou.aliyuncs.com/fastgpt/fastgpt:v4.8.1
     container_name: fastgpt
     restart: unless-stopped
     ports:
       - "3001:3000"
-    environment:
-      # 基础配置
-      DEFAULT_ROOT_PSW: FastGPT2025Admin!
-      OPENAI_BASE_URL: http://oneapi:3000/v1
-      CHAT_API_KEY: sk-fastgpt-internal-key
-      # 数据库配置
-      DB_MAX_LINK: 30
-      TOKEN_KEY: fastgpt-token-key-2025-secure
-      ROOT_KEY: fastgpt-root-key-2025-secure
-      FILE_TOKEN_KEY: fastgpt-file-token-2025
-      # MongoDB 配置
-      MONGODB_URI: mongodb://root:FastGPT2025Secure!@mongo:27017/fastgpt?authSource=admin
-      # PostgreSQL 配置
-      PG_URL: postgresql://postgres:FastGPT2025Secure!@pg:5432/fastgpt
+    env_file:
+      - ./fastgpt.env
+    volumes:
+      - ./fastgpt-config.json:/app/data/config.json:ro
     depends_on:
       pg:
         condition: service_healthy

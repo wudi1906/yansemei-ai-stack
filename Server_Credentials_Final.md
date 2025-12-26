@@ -30,14 +30,20 @@
 
 #### FastGPT (demo.yansemei.com)
 - 端口: 3001
+- 版本: v4.8.1 (稳定版)
 - 账号: `root`
 - 密码: `FastGPT2025Admin!`
-- API Key: `sk-khvlnebzljzmhttquzghrbidptpygrzzoeymgpgfkklwltlw`
+- 配置文件: `fastgpt.env`, `fastgpt-config.json`
 
 #### OneAPI (api.yansemei.com)
 - 端口: 3002
+- 版本: v0.6.11-preview.7
 - 账号: `root`
 - 密码: `123456` ⚠️ 首次登录后修改!
+- 令牌: `sk-kLGqLaHr4OsT8i7oBdE99725Fe7b45F78d2bB97119831086`
+- 渠道配置:
+  - SiliconFlow (主力): `https://api.siliconflow.com` + 模型 `deepseek-ai/DeepSeek-V3`
+  - DeepSeek (备用): `https://api.deepseek.com` + 模型 `deepseek-chat`
 
 #### 数据库
 | 服务 | 端口 | 用户 | 密码 |
@@ -91,8 +97,8 @@
 
 | 域名 | 目标 | 用途 | 状态 |
 |------|------|------|------|
-| demo.yansemei.com | fastgpt:3001 | 客户友好入口 | 需修复 |
-| api.yansemei.com | oneapi:3002 | 模型路由 | 需修复 |
+| demo.yansemei.com | fastgpt:3001 | 客户友好入口 | ✅ 运行 |
+| api.yansemei.com | oneapi:3002 | 模型路由 | ✅ 运行 |
 | aurora.yansemei.com | chat-ui:3000 | Agent 演示 | ✅ 运行 |
 | agent.yansemei.com | agent-service:2025 | Agent API | ✅ 运行 |
 | chat.yansemei.com | admin-ui:5173 | 知识库管理 | ✅ 运行 |
