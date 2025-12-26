@@ -1,7 +1,12 @@
 # Huice AI Platform - Docker Compose Configuration
+# 双轨制架构: FastGPT (客户友好) + Huice (高级能力)
 # 
 # 部署位置: VPS /home/ai-stack/yansemei-ai-stack/huice/
 # 最后更新: 2025-12-26
+#
+# 架构说明:
+# - 轨道 A (FastGPT): 面向普通客户，低代码可视化，客户可自维护
+# - 轨道 B (Huice): 面向高端客户，LangGraph Agent + 知识图谱 RAG
 #
 # 重要说明:
 # - NEXT_PUBLIC_* 环境变量是给浏览器端使用的，必须使用公网域名
@@ -12,10 +17,130 @@ networks:
   npm_default:
     external: true
 
+volumes:
+  pg_data:
+  mongo_data:
+  redis_data:
+  oneapi_data:
+
 services:
   # ============================================
-  # RAG Core - LightRAG 知识图谱引擎
+  # 轨道 A: FastGPT 客户友好层
   # ============================================
+
+  # PostgreSQL - FastGPT 向量数据库
+  pg:
+    image: pgvector/pgvector:pg15
+    container_name: pg
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: FastGPT2025Secure!
+      POSTGRES_DB: fastgpt
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks: [npm_default]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # MongoDB - FastGPT 文档数据库
+  mongo:
+    image: mongo:5.0.18
+    container_name: mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: FastGPT2025Secure!
+    volumes:
+      - mongo_data:/data/db
+    networks: [npm_default]
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis - FastGPT 缓存
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass FastGPT2025Secure!
+    volumes:
+      - redis_data:/data
+    networks: [npm_default]
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "FastGPT2025Secure!", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # OneAPI - 模型路由与配额管理
+  oneapi:
+    image: justsong/one-api:latest
+    container_name: oneapi
+    restart: unless-stopped
+    ports:
+      - "3002:3000"
+    environment:
+      TZ: Asia/Shanghai
+      SQL_DSN: postgres://postgres:FastGPT2025Secure!@pg:5432/oneapi?sslmode=disable
+      REDIS_CONN_STRING: redis://:FastGPT2025Secure!@redis:6379
+      SESSION_SECRET: oneapi-session-secret-2025
+    volumes:
+      - oneapi_data:/data
+    depends_on:
+      pg:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks: [npm_default]
+
+  # FastGPT - 客户友好型 AI 应用平台
+  fastgpt:
+    image: ghcr.io/labring/fastgpt:v4.8.15
+    container_name: fastgpt
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      # 基础配置
+      DEFAULT_ROOT_PSW: FastGPT2025Admin!
+      OPENAI_BASE_URL: http://oneapi:3000/v1
+      CHAT_API_KEY: sk-fastgpt-internal-key
+      # 数据库配置
+      DB_MAX_LINK: 30
+      TOKEN_KEY: fastgpt-token-key-2025-secure
+      ROOT_KEY: fastgpt-root-key-2025-secure
+      FILE_TOKEN_KEY: fastgpt-file-token-2025
+      # MongoDB 配置
+      MONGODB_URI: mongodb://root:FastGPT2025Secure!@mongo:27017/fastgpt?authSource=admin
+      # PostgreSQL 配置
+      PG_URL: postgresql://postgres:FastGPT2025Secure!@pg:5432/fastgpt
+    depends_on:
+      pg:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      oneapi:
+        condition: service_started
+    networks: [npm_default]
+
+  # ============================================
+  # 轨道 B: Huice 高级能力层
+  # ============================================
+  # RAG Core - LightRAG 知识图谱引擎
   rag-core:
     build:
       context: ./rag-core
@@ -28,9 +153,7 @@ services:
     networks: [npm_default]
     restart: unless-stopped
 
-  # ============================================
   # MCP Server - RAG 工具服务
-  # ============================================
   mcp:
     build:
       context: ..
@@ -43,9 +166,7 @@ services:
     networks: [npm_default]
     restart: unless-stopped
 
-  # ============================================
   # Agent Service - LangGraph Agent 大脑
-  # ============================================
   agent-service:
     build:
       context: ./agent-service
@@ -60,11 +181,8 @@ services:
     networks: [npm_default]
     restart: unless-stopped
 
-  # ============================================
   # Chat UI - AuroraAI 对话界面
-  # ============================================
   # 重要: NEXT_PUBLIC_API_URL 必须使用公网域名！
-  # 因为这个变量是给浏览器端使用的，浏览器无法访问 Docker 内部网络
   chat-ui:
     build:
       context: ./chat-ui
@@ -77,11 +195,7 @@ services:
     networks: [npm_default]
     restart: unless-stopped
 
-  # ============================================
   # Admin UI - LightRAG 管理界面
-  # ============================================
-  # 重要: VITE_BACKEND_URL 也是给浏览器端使用的
-  # 但 Admin UI 可能有服务端渲染，需要测试确认
   admin-ui:
     build:
       context: ./admin-ui
