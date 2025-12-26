@@ -1,4 +1,4 @@
-# MCP Server Dockerfile
+# MCP Server Dockerfile - Lightweight Version
 # Copyright (c) 2025 Dean Wu. All rights reserved.
 # AuroraAI Project.
 
@@ -6,18 +6,12 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# 安装系统依赖
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
-# 复制依赖文件
-COPY huice/mcp-server/pyproject.toml ./
-COPY huice/mcp-server/uv.lock ./
-
-# 安装 uv 并安装依赖
-RUN pip install --no-cache-dir uv && \
-    uv pip install --system --no-cache -r pyproject.toml
+# 安装依赖（不需要 build-essential，因为没有需要编译的包）
+RUN pip install --no-cache-dir \
+    aiohttp>=3.9.0 \
+    fastmcp>=2.0.0 \
+    python-dotenv>=1.0.0 \
+    httpx>=0.27.0
 
 # 复制源代码
 COPY huice/mcp-server/src ./src

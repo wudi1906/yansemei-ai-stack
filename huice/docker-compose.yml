@@ -38,7 +38,7 @@ services:
     container_name: huice-mcp
     ports: ["8001:8001"]
     environment:
-      - RAG_API_BASE=http://rag-core:9621
+      - RAG_CORE_API_URL=http://rag-core:9621
     depends_on: [rag-core]
     networks: [npm_default]
     restart: unless-stopped
@@ -51,10 +51,11 @@ services:
       context: ./agent-service
     container_name: huice-agent-service
     ports: ["2025:2025"]
+    volumes:
+      - ./agent-service/.env:/app/.env:ro
     environment:
-      - MCP_SERVER_URL=http://mcp:8001/sse
+      - MCP_URL=http://mcp:8001
       - RAG_API_BASE=http://rag-core:9621
-      # API_KEY 从 .env 文件读取
     depends_on: [mcp, rag-core]
     networks: [npm_default]
     restart: unless-stopped

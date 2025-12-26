@@ -6,18 +6,20 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# 安装系统依赖
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
-# 复制依赖文件
-COPY pyproject.toml ./
-COPY uv.lock ./
-
-# 安装 uv 并安装依赖
-RUN pip install --no-cache-dir uv && \
-    uv pip install --system --no-cache -r pyproject.toml
+# 安装依赖（直接用 pip，不需要 uv）
+RUN pip install --no-cache-dir \
+    langchain>=0.3.0 \
+    langchain-community>=0.3.0 \
+    langchain-core>=0.3.0 \
+    langchain-text-splitters>=0.3.0 \
+    langchain-mcp-adapters>=0.1.0 \
+    langgraph>=0.2.0 \
+    langchain-openai>=0.1.0 \
+    nest-asyncio>=1.6.0 \
+    fastapi>=0.115.0 \
+    uvicorn>=0.32.0 \
+    python-dotenv>=1.0.0 \
+    pydantic>=2.0.0
 
 # 复制源代码
 COPY . .

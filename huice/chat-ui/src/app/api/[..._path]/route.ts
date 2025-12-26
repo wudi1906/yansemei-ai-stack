@@ -2,7 +2,6 @@
  * Copyright (c) 2025 Dean Wu. All rights reserved.
  * AuroraAI Project.
  */
-// @ts-expect-error  MC8yOmFIVnBZMlhsa0xUb3Y2bzZOWGh4Wnc9PTpjZjUxNmJkNQ==
 
 import { initApiPassthrough } from "langgraph-nextjs-api-passthrough";
 
