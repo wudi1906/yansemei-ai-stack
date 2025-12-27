@@ -47,36 +47,48 @@
 
 ---
 
-## 3. 服务访问地址与认证方式
+## 3. 服务访问地址与登录凭据
 
 ### 3.1 轨道 A: FastGPT Stack
 
-| 服务 | 域名 | 认证方式 |
-|------|------|----------|
-| FastGPT | https://demo.yansemei.com | FastGPT 内置登录 |
-| OneAPI | https://api.yansemei.com | OneAPI 内置登录 |
+| 服务 | 域名 | 用户名 | 密码 |
+|------|------|--------|------|
+| FastGPT | https://demo.yansemei.com | root | FastGPT2025Admin! |
+| OneAPI | https://api.yansemei.com | root | 123456 |
 
 ### 3.2 轨道 B: Huice Core
 
-| 服务 | 域名 | 认证方式 |
-|------|------|----------|
-| Chat UI | https://aurora.yansemei.com | 公开访问 |
-| Admin UI | https://chat.yansemei.com | LightRAG WebUI 登录 |
-| Agent API | https://agent.yansemei.com | API Key |
-| RAG Core | https://kb.yansemei.com | API Key |
+| 服务 | 域名 | 认证方式 | 凭据 |
+|------|------|----------|------|
+| Chat UI | https://aurora.yansemei.com | 公开访问 | - |
+| Admin UI | https://chat.yansemei.com | 公开访问 | - |
+| Agent API | https://agent.yansemei.com | API Key | 见下方 API Key 记录 |
+| RAG Core | https://kb.yansemei.com | API Key | 见下方 API Key 记录 |
 
 ### 3.3 共享基础设施
 
-| 服务 | 域名 | 认证方式 |
-|------|------|----------|
-| n8n | https://flow.yansemei.com | n8n 内置登录 |
-| NPM 管理 | http://148.135.57.133:81 | NPM 内置登录 |
+| 服务 | 域名 | 用户名 | 密码 |
+|------|------|--------|------|
+| n8n | https://flow.yansemei.com | wudi1906@gmail.com | Wudi123456 |
+| NPM 管理 | http://148.135.57.133:81 | admin@example.com | changeme (首次登录需修改) |
 
 ---
 
-## 4. API Key 记录
+## 4. 数据库凭据
 
-### 4.1 Huice 服务
+### 4.1 基础设施数据库
+
+| 服务 | 用户名 | 密码 |
+|------|--------|------|
+| PostgreSQL | postgres | FastGPT2025Secure! |
+| MongoDB | root | FastGPT2025Secure! |
+| Redis | - | FastGPT2025Secure! |
+
+---
+
+## 5. API Key 记录
+
+### 5.1 Huice 服务
 
 ```bash
 # Agent Service API Key
@@ -86,25 +98,28 @@
 75f5b78ed421819d66394293e843872ef2fc2b74909da6b5edcce7d8f1eb33fa
 ```
 
-### 4.2 FastGPT
+### 5.2 FastGPT
 
 ```bash
 # FastGPT API Key
 sk-khvlnebzljzmhttquzghrbidptpygrzzoeymgpgfkklwltlw
 ```
 
-### 4.3 云服务
+### 5.3 云服务
 
 ```bash
 # SiliconFlow API Key
 sk-ebuinjyygubsompogzhgmvabmtizghsuewvhvdfkohlrntyt
+
+# OneAPI Token
+sk-kLGqLaHr4OsT8i7oBdE99725Fe7b45F78d2bB97119831086
 ```
 
 ---
 
-## 5. 外部 API 调用示例
+## 6. 外部 API 调用示例
 
-### 5.1 调用 Agent Service
+### 6.1 调用 Agent Service
 
 ```bash
 curl -X POST https://agent.yansemei.com/chat \
@@ -113,7 +128,7 @@ curl -X POST https://agent.yansemei.com/chat \
   -d '{"query": "你好"}'
 ```
 
-### 5.2 调用 RAG Core
+### 6.2 调用 RAG Core
 
 ```bash
 curl https://kb.yansemei.com/query \
@@ -122,7 +137,7 @@ curl https://kb.yansemei.com/query \
   -d '{"query": "搜索内容"}'
 ```
 
-### 5.3 调用 FastGPT
+### 6.3 调用 FastGPT
 
 ```bash
 curl -X POST https://demo.yansemei.com/api/v1/chat/completions \
@@ -137,15 +152,15 @@ curl -X POST https://demo.yansemei.com/api/v1/chat/completions \
 
 ---
 
-## 6. 防火墙管理
+## 7. 防火墙管理
 
-### 6.1 查看规则
+### 7.1 查看规则
 
 ```bash
 ufw status verbose
 ```
 
-### 6.2 临时开放 NPM 管理端口
+### 7.2 临时开放 NPM 管理端口
 
 ```bash
 # 获取你的公网 IP
@@ -160,7 +175,7 @@ ufw delete allow from YOUR_IP to any port 81
 
 ---
 
-## 7. Fail2Ban 管理
+## 8. Fail2Ban 管理
 
 ```bash
 # 查看状态
@@ -175,7 +190,7 @@ fail2ban-client set sshd unbanip IP_ADDRESS
 
 ---
 
-## 8. 日志查看
+## 9. 日志查看
 
 ```bash
 # FastGPT 日志
@@ -193,7 +208,7 @@ docker logs npm-app-1 --tail 100
 
 ---
 
-## 9. 服务重启
+## 10. 服务重启
 
 ```bash
 cd /home/ai-stack/yansemei-ai-stack/huice
@@ -210,7 +225,7 @@ docker compose restart
 
 ---
 
-## 10. 健康检查
+## 11. 健康检查
 
 | 服务 | 检查命令 | 预期结果 |
 |------|----------|----------|
@@ -224,19 +239,20 @@ docker compose restart
 
 ---
 
-## 11. 配置文件位置
+## 12. 配置文件位置
 
 | 文件 | 路径 |
 |------|------|
 | Agent Service 配置 | `/home/ai-stack/yansemei-ai-stack/huice/agent-service/.env` |
 | RAG Core 配置 | `/home/ai-stack/yansemei-ai-stack/huice/rag-core/.env` |
 | Docker Compose | `/home/ai-stack/yansemei-ai-stack/huice/docker-compose.yml` |
+| n8n 配置 | `/home/ai-stack/n8n/docker-compose.yml` |
 | UFW 规则 | `/etc/ufw/user.rules` |
 | Fail2Ban 配置 | `/etc/fail2ban/jail.local` |
 
 ---
 
-## 12. 密钥轮换指南
+## 13. 密钥轮换指南
 
 建议每 90 天轮换一次 API Key：
 
@@ -258,4 +274,4 @@ docker restart huice-agent-service
 
 ---
 
-*最后更新: 2025-12-26*
+*最后更新: 2025-12-27*
