@@ -18,8 +18,9 @@ from typing import Optional, Dict, Any
 
 logger = logging.getLogger(__name__)
 
-# RAG Core API 地址
+# RAG Core API 地址和认证
 RAG_CORE_API_URL = os.getenv("RAG_CORE_API_URL", "http://127.0.0.1:9621")
+RAG_CORE_API_KEY = os.getenv("RAG_CORE_API_KEY", "")
 
 
 async def query_rag_core(
@@ -48,11 +49,17 @@ async def query_rag_core(
         "top_k": top_k,
     }
     
+    # 构建请求头，包含 API Key 认证
+    headers = {}
+    if RAG_CORE_API_KEY:
+        headers["X-API-Key"] = RAG_CORE_API_KEY
+    
     try:
         async with aiohttp.ClientSession() as session:
             async with session.post(
                 url,
                 json=payload,
+                headers=headers,
                 timeout=aiohttp.ClientTimeout(total=timeout)
             ) as response:
                 if response.status == 200:
@@ -92,9 +99,14 @@ async def get_rag_core_health() -> Dict[str, Any]:
     """
     url = f"{RAG_CORE_API_URL}/health"
     
+    # 构建请求头，包含 API Key 认证
+    headers = {}
+    if RAG_CORE_API_KEY:
+        headers["X-API-Key"] = RAG_CORE_API_KEY
+    
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.get(url, timeout=aiohttp.ClientTimeout(total=10)) as response:
+            async with session.get(url, headers=headers, timeout=aiohttp.ClientTimeout(total=10)) as response:
                 if response.status == 200:
                     return await response.json()
                 else:
@@ -112,9 +124,14 @@ async def get_rag_core_documents() -> Dict[str, Any]:
     """
     url = f"{RAG_CORE_API_URL}/documents"
     
+    # 构建请求头，包含 API Key 认证
+    headers = {}
+    if RAG_CORE_API_KEY:
+        headers["X-API-Key"] = RAG_CORE_API_KEY
+    
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.get(url, timeout=aiohttp.ClientTimeout(total=30)) as response:
+            async with session.get(url, headers=headers, timeout=aiohttp.ClientTimeout(total=30)) as response:
                 if response.status == 200:
                     return await response.json()
                 else:

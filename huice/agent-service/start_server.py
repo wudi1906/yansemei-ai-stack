@@ -204,25 +204,48 @@ async def generate_sse_response(thread_id: str, user_msg: str):
         print(f"💬 Processing: {user_msg[:100]}")
         result = agent.invoke({"messages": [("user", user_msg)]})
         
-        # Extract AI response
+        # Extract AI response from LangGraph result
         ai_content = ""
         if "messages" in result:
-            for msg in result["messages"]:
+            for msg in reversed(result["messages"]):
+                # Handle LangChain message objects
                 if hasattr(msg, "type") and msg.type == "ai":
-                    ai_content = msg.content
+                    content = msg.content
+                    # Handle content that might be a string or complex object
+                    if isinstance(content, str):
+                        ai_content = content
+                    elif isinstance(content, list):
+                        # Extract text from content blocks
+                        text_parts = []
+                        for part in content:
+                            if isinstance(part, dict) and part.get("type") == "text":
+                                text_parts.append(part.get("text", ""))
+                            elif isinstance(part, str):
+                                text_parts.append(part)
+                        ai_content = "\n".join(text_parts)
                     break
                 elif isinstance(msg, dict) and msg.get("type") == "ai":
                     ai_content = msg.get("content", "")
                     break
         
         if not ai_content:
-            ai_content = str(result)
+            # Fallback: try to extract any meaningful content
+            ai_content = "抱歉，我无法处理您的请求。请稍后再试。"
         
-        # Send values event with the response
+        # Send values event with properly formatted messages for LangGraph Chat UI
+        # The Chat UI expects messages in a specific format
         values_data = {
             "messages": [
-                {"type": "human", "content": user_msg},
-                {"type": "ai", "content": ai_content, "id": str(uuid.uuid4())}
+                {
+                    "type": "human",
+                    "content": user_msg,
+                    "id": str(uuid.uuid4()),
+                },
+                {
+                    "type": "ai",
+                    "content": ai_content,
+                    "id": str(uuid.uuid4()),
+                }
             ]
         }
         yield create_sse_event("values", values_data)
