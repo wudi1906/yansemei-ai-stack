@@ -54,7 +54,7 @@
 | 服务 | 域名 | 用户名 | 密码 |
 |------|------|--------|------|
 | FastGPT | https://demo.yansemei.com | root | FastGPT2025Admin! |
-| OneAPI | https://api.yansemei.com | root | 123456 |
+| OneAPI | https://api.yansemei.com | wudi1906 | wudi123456 |
 
 ### 3.2 轨道 B: Huice Core
 
