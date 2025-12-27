@@ -70,7 +70,7 @@
 | 服务 | 域名 | 用户名 | 密码 |
 |------|------|--------|------|
 | n8n | https://flow.yansemei.com | wudi1906@gmail.com | Wudi123456 |
-| NPM 管理 | http://148.135.57.133:81 | admin@example.com | changeme (首次登录需修改) |
+| NPM 管理 | http://148.135.57.133:81 | wudi1906@gmail.com | wudi123456 |
 
 ---
 
