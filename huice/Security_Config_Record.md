@@ -58,10 +58,10 @@
 
 ### 3.2 轨道 B: Huice Core
 
-| 服务 | 域名 | 认证方式 | 凭据 |
-|------|------|----------|------|
+| 服务 | 域名 | 用户名 | 密码 |
+|------|------|--------|------|
 | Chat UI | https://aurora.yansemei.com | 公开访问 | - |
-| Admin UI | https://chat.yansemei.com | 公开访问 | - |
+| Admin UI | https://chat.yansemei.com | wudi1906 | wudi123456 |
 | Agent API | https://agent.yansemei.com | API Key | 见下方 API Key 记录 |
 | RAG Core | https://kb.yansemei.com | API Key | 见下方 API Key 记录 |
 
